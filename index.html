@@ -20,7 +20,7 @@
       <div class="submenu" id="orders"><span class="title">Commandes</span></div>
     </div>
 
-    <div id="searchBox">
+    <div id="searchBox" class="box">
       <p id="searchTitle" class="titleSection">
         <img src="Icons/search.svg" alt="search icon" class="icon">
         Rechercher un client
@@ -28,7 +28,7 @@
       <input id="searchBar" placeholder="Rechercher" type="text">
     </div>
     
-    <div id="listBox">
+    <div id="listBox" class="box">
         <p id="listTitle" class="titleSection">
           <img src="Icons/list.svg" alt="list icon" class="icon">
           Liste des clients
@@ -37,6 +37,30 @@
           <img src="Icons/add.svg" alt="add icon" class="icon">
           Ajouter un client
         </p>
+    </div>
+
+    <div id="overlayAddClient">
+      <div class="fidelity">
+        <p class="subtitle">Fidélité</p>
+        <div class="fidelityBox box">
+          <p class="subtitle">Niveau</p>
+          <select id="dropdownLevel" class="itemForm">
+            <option value="-">-</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+            <option value="Ultimate">Ultimate</option>
+          </select>
+          <p class="subtitle">Points</p>
+          <input id="nbPoints" class="itemForm" placeholder="0" type="number">
+        </div>
+      </div>
+      <div class="form">
+        <p class="subtitle">Identité</p>
+        <div class="identityBox box">
+          
+        </div>
+      </div>
     </div>
   </body>
 </html>
