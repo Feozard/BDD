@@ -1,4 +1,6 @@
 var isOnClients = true; // true if we are on clients tab, false if we are on orders tab
+var nbTel = 1;  // number of tel inputs
+var nbAdr = 1;  // number of address inputs
 
 document.getElementById("searchBar").addEventListener("keypress", function(event) { // search when pressing enter
     if (event.key === "Enter") {
@@ -56,8 +58,97 @@ function searchClients() {
 
 function addClient() {
     console.log("add client");
+    document.getElementById("overlayAddClient").style.display = "flex";
+    document.getElementById("overlayAddClient").style.flexDirection = "row";
 }
 
+document.getElementById("closeButton").addEventListener("click", closeOverlay);    // close overlay
+
+function closeOverlay() {
+    console.log("close overlay");
+    document.getElementById("overlayAddClient").style.display = "none";
+}
+
+// tel management
+document.getElementById("addTel").addEventListener("click", addTel);    // add a new tel input
+
+function addTel() {
+    nbTel++;    // increment number of tel inputs
+    document.getElementById("addTel").remove();    // remove add button to avoid multiple add buttons
+
+    document.getElementById("telNum1").innerHTML = "Tél. 1";    // change tel label for multiple tels
+
+    var telBox = document.getElementById("telBox");
+
+    var newDiv = document.createElement("div");
+    newDiv.className = "blockInfo";
+
+    var newTelNum = document.createElement("p");
+    newTelNum.className = "subtitle";
+    newTelNum.innerHTML = "Tél. " + nbTel;
+    newTelNum.id = "telNum" + nbTel;
+
+    var newDropdownTel = document.createElement("select");
+    newDropdownTel.className = "itemForm";
+    newDropdownTel.id = "dropdownTel";
+    newDropdownTel.innerHTML = "<option value='+33'>+33</option><option value='autre'>Autre</option>";
+
+    var newTel = document.createElement("input");
+    newTel.type = "tel";
+    newTel.id = "phone";
+    newTel.className = "itemForm";
+    newTel.placeholder = "06 12 34 56 78";
+
+    var newAddTel = document.createElement("button");
+    newAddTel.id = "addTel";
+    newAddTel.className = "itemForm";
+    newAddTel.addEventListener("click", addTel);
+
+    newDiv.appendChild(newTelNum);
+    newDiv.appendChild(newDropdownTel);
+    newDiv.appendChild(newTel);
+    newDiv.appendChild(newAddTel);
+
+    telBox.appendChild(newDiv);
+}
+
+// address management
+document.getElementById("adr1").style.backgroundColor = "white";    // set first address as selected
+var currentAdr = 1;
+document.getElementById("adr1").addEventListener("click", () => {
+    selectAdr(1);
+});
+document.getElementById("addAdr").addEventListener("click", addAdr);    // add a new address input
+
+function addAdr() {
+    nbAdr++;    // increment number of address inputs
+    document.getElementById("addAdr").remove();    // remove add button to avoid multiple add buttons
+    var onglets = document.getElementById("onglets");
+
+    var newAdr = document.createElement("button");
+    newAdr.id = "adr" + nbAdr;
+    newAdr.className = "ongletAdr";
+    newAdr.innerHTML = "Adr. " + nbAdr;
+    newAdr.addEventListener("click", () => {
+        selectAdr(nbAdr);
+    });
+
+    var newAddAdr = document.createElement("button");
+    newAddAdr.id = "addAdr";
+    newAddAdr.className = "ongletAdr";
+    newAddAdr.addEventListener("click", addAdr);
+
+    onglets.appendChild(newAdr);
+    onglets.appendChild(newAddAdr);
+    
+    selectAdr(nbAdr);
+}
+
+function selectAdr(n) {
+    document.getElementById("adr" + currentAdr).style.backgroundColor = "#B4B4B4";    // unselect current address
+    currentAdr = n;
+    document.getElementById("adr" + currentAdr).style.backgroundColor = "white";    // select new address
+}
 
 // Orders
 
