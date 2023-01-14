@@ -112,13 +112,12 @@
 }
 
 #overlayAddClient {
-    position: fixed;
+    position: absolute;
     width: 550px;
-    display: flex;
-    flex-direction: row;
     z-index: 2; 
-    top: 50px;
-    left: 30%;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
     background-color: transparent;
     display: none;
 }
@@ -162,7 +161,7 @@ input::-webkit-inner-spin-button {
     white-space: nowrap;
 }
 
-.form {
+.formClient {
     background-color: #D9D9D9;
     height: 100%;
     width: 420px;
@@ -269,7 +268,7 @@ input::-webkit-inner-spin-button {
     padding-left: 0px;
 }
 
-#closeButton {
+.closeButton {
     background-image: url(Icons/close.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -280,5 +279,24 @@ input::-webkit-inner-spin-button {
     border: none;
     background-color: transparent;
     float: right;
+}
+
+#overlayAddOrder {
+    position: absolute;
+    width: 600px;
+    z-index: 2; 
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    background-color: transparent;
+    display: none;
+}
+
+.formOrder {
+    background-color: #D9D9D9;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    padding: 10px;
 }
 

@@ -62,9 +62,9 @@ function addClient() {
     document.getElementById("overlayAddClient").style.flexDirection = "row";
 }
 
-document.getElementById("closeButton").addEventListener("click", closeOverlay);    // close overlay
+document.getElementById("closeButtonClient").addEventListener("click", closeOverlayClient);    // close overlay
 
-function closeOverlay() {
+function closeOverlayClient() {
     console.log("close overlay");
     document.getElementById("overlayAddClient").style.display = "none";
 }
@@ -190,6 +190,15 @@ function searchOrders() {
 
 function addOrder() {
     console.log("add order");
+    document.getElementById("overlayAddOrder").style.display = "flex";
+    document.getElementById("overlayAddOrder").style.flexDirection = "row";
+}
+
+document.getElementById("closeButtonOrder").addEventListener("click", closeOverlayOrder);    // close overlay
+
+function closeOverlayOrder() {
+    console.log("close overlay");
+    document.getElementById("overlayAddOrder").style.display = "none";
 }
 
 function exportList() {

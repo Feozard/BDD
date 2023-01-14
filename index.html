@@ -40,6 +40,7 @@
         </p>
     </div>
 
+    <!-- Overlay Client -->
     <div id="overlayAddClient">
       <div class="fidelity">
         <p class="subtitle">Fidélité</p>
@@ -56,13 +57,14 @@
           <input id="nbPoints" class="itemFormFidelity" placeholder="0" type="number">
         </div>
       </div>
-      <div class="form">
-        <button id="closeButton"></button>
+
+      <div class="formClient">
+        <button class="closeButton" id="closeButtonClient"></button>
         <p class="subtitle">Identité</p>
         <div class="formBox box">
           <div class="blockInfo">
             <p class="subtitle">ID</p>
-            <input id="id" class="itemForm" placeholder="ID" type="text" readonly>
+            <input id="id_client" class="itemForm" placeholder="ID" type="text" readonly>
           </div>
           <div class="blockInfo">
             <p class="subtitle">Nom</p>
@@ -137,8 +139,43 @@
             <input id="zip" class="itemForm" placeholder="75000">
             <p class="subtitle secondItem">Pays</p>
             <input id="pays" class="itemForm" placeholder="France">
-
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay Order -->
+    <div id="overlayAddOrder">
+      <div class="formOrder">
+        <button class="closeButton" id="closeButtonOrder"></button>
+        <p class="subtitle">Informations</p>
+        <div class="formBox box">
+          <div class="blockInfo">
+            <p class="subtitle">ID</p>
+            <input id="id_order" class="itemForm" placeholder="ID" type="text" readonly>
+            <p class="subtitle secondItem">Date</p>
+            <input id="date" class="itemForm" type="date">
+            <script type="text/javascript">
+              document.getElementById("date").placeholder = new Date().toLocaleDateString();
+            </script>
+            <p class="subtitle secondItem">Statut</p>
+            <select id="dropdownStatus" class="itemForm">
+              <option value="à payer">À payer</option>
+              <option value="payée">Payée</option>
+              <option value="empaqueté">Empaquetée</option>
+              <option value="envoyée">Envoyée</option>
+              <option value="livrée">Livrée</option>
+              <option value="terminée">Terminée</option>
+            </select>
+          </div>
+
+          <div class="blockInfo">
+            <p class="subtitle">ID Client</p>
+            <input id="id_client_order" class="itemForm" placeholder="ID" type="text">
+            <p class="subtitle secondItem">Nom client</p>
+            <input id="name_client_order" class="itemForm" placeholder="Marie Martin" type="text" readonly>
+          </div>
+          
         </div>
       </div>
     </div>
