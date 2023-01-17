@@ -1,6 +1,7 @@
 var isOnClients = true; // true if we are on clients tab, false if we are on orders tab
 var nbTel = 1;  // number of tel inputs
 var nbAdr = 1;  // number of address inputs
+var nbPaiement = 1;  // number of payment inputs
 
 document.getElementById("searchBar").addEventListener("keypress", function(event) { // search when pressing enter
     if (event.key === "Enter") {
@@ -66,6 +67,7 @@ document.getElementById("closeButtonClient").addEventListener("click", closeOver
 
 function closeOverlayClient() {
     console.log("close overlay");
+    nbAdr = 1;  // reset number of address inputs
     document.getElementById("overlayAddClient").style.display = "none";
 }
 
@@ -123,7 +125,7 @@ document.getElementById("addAdr").addEventListener("click", addAdr);    // add a
 function addAdr() {
     nbAdr++;    // increment number of address inputs
     document.getElementById("addAdr").remove();    // remove add button to avoid multiple add buttons
-    var onglets = document.getElementById("onglets");
+    var onglets = document.getElementById("ongletsAdr");
 
     var newAdr = document.createElement("button");
     newAdr.id = "adr" + nbAdr;
@@ -135,7 +137,7 @@ function addAdr() {
 
     var newAddAdr = document.createElement("button");
     newAddAdr.id = "addAdr";
-    newAddAdr.className = "ongletAdr";
+    newAddAdr.className = "onglet addOnglet";
     newAddAdr.addEventListener("click", addAdr);
 
     onglets.appendChild(newAdr);
@@ -148,6 +150,15 @@ function selectAdr(n) {
     document.getElementById("adr" + currentAdr).style.backgroundColor = "#B4B4B4";    // unselect current address
     currentAdr = n;
     document.getElementById("adr" + currentAdr).style.backgroundColor = "white";    // select new address
+
+    // remember to save info before changing address
+    // clean address inputs
+    document.getElementById("dropdownAdr").selectedIndex = "0";
+    document.getElementById("numVoie").value = "";
+    document.getElementById("voie").value = "";
+    document.getElementById("ville").value = "";
+    document.getElementById("zip").value = "";
+    document.getElementById("pays").value = "";
 }
 
 // Orders
@@ -198,9 +209,54 @@ document.getElementById("closeButtonOrder").addEventListener("click", closeOverl
 
 function closeOverlayOrder() {
     console.log("close overlay");
+    nbPaiement = 1; // reset numbers of paiement inputs
     document.getElementById("overlayAddOrder").style.display = "none";
 }
 
 function exportList() {
     console.log("export list");
+}
+
+// paiement management
+document.getElementById("paiement1").style.backgroundColor = "white";    // set first paiement as selected
+var currentPaiement = 1;
+document.getElementById("paiement1").addEventListener("click", () => {
+    selectPaiement(1);
+});
+document.getElementById("addPaiement").addEventListener("click", addPaiement);    // add a new address input
+
+function addPaiement() {
+    nbPaiement++;    // increment number of address inputs
+    document.getElementById("addPaiement").remove();    // remove add button to avoid multiple add buttons
+    var onglets = document.getElementById("ongletsPaiement");
+
+    var newPaiement = document.createElement("button");
+    newPaiement.id = "paiement" + nbPaiement;
+    newPaiement.className = "ongletPaiement";
+    newPaiement.innerHTML = "P" + nbPaiement;
+    newPaiement.addEventListener("click", () => {
+        selectPaiement(nbPaiement);
+    });
+
+    var newAddPaiement = document.createElement("button");
+    newAddPaiement.id = "addPaiement";
+    newAddPaiement.className = "onglet addOnglet";
+    newAddPaiement.addEventListener("click", addPaiement);
+
+    onglets.appendChild(newPaiement);
+    onglets.appendChild(newAddPaiement);
+    
+    selectPaiement(nbPaiement);
+}
+
+function selectPaiement(n) {
+    document.getElementById("paiement" + currentPaiement).style.backgroundColor = "#B4B4B4";    // unselect current address
+    currentPaiement = n;
+    document.getElementById("paiement" + currentPaiement).style.backgroundColor = "white";    // select new address
+
+    // remember to save info before changing paiement
+    // clean address inputs
+    document.getElementById("dropdownPaiement").selectedIndex = "0";
+    document.getElementById("montant").value = "";
+    document.getElementById("datePaiement").value = "";
 }

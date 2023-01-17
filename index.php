@@ -17,7 +17,7 @@
 
   <body>
     <div id="menu">
-      <div class="submenu" id="clients"><span class="title">Clients</span></div>
+      <div class="submenu" id="clients"><span class="title">Clients bjr bjr</span></div>
       <div class="submenu" id="orders"><span class="title">Commandes</span></div>
     </div>
 
@@ -110,9 +110,9 @@
 
         <br />
         <p class="subtitle">Adresse(s)</p>
-        <div id="onglets">
-          <button class="ongletAdr" id="adr1">Adr. 1</button>
-          <button class="ongletAdr" id="addAdr"></button>
+        <div class="onglets" id="ongletsAdr">
+          <button class="onglet" id="adr1">Adr. 1</button>
+          <button class="onglet addOnglet" id="addAdr"></button>
         </div>
         <div class="formBox box">
           <div class="blockInfo">
@@ -148,6 +148,7 @@
     <div id="overlayAddOrder">
       <div class="formOrder">
         <button class="closeButton" id="closeButtonOrder"></button>
+
         <p class="subtitle">Informations</p>
         <div class="formBox box">
           <div class="blockInfo">
@@ -168,15 +169,61 @@
               <option value="terminée">Terminée</option>
             </select>
           </div>
-
           <div class="blockInfo">
             <p class="subtitle">ID Client</p>
             <input id="id_client_order" class="itemForm" placeholder="ID" type="text">
             <p class="subtitle secondItem">Nom client</p>
             <input id="name_client_order" class="itemForm" placeholder="Marie Martin" type="text" readonly>
           </div>
-          
         </div>
+
+        <div class="blockFormBox">
+          <div class="paiementBox">
+            <br />
+            <p class="subtitle">Paiement</p>
+            <div class="onglets" id="ongletsPaiement">
+              <button class="onglet" id="paiement1">P1</button>
+              <button class="onglet addOnglet" id="addPaiement"></button>
+            </div>
+            <div class="formBox box">
+              <div class="blockInfo">
+                <p class="subtitle">Type</p>
+                <select id="dropdownPaiement" class="itemForm">
+                  <!-- Les options viendront de la bdd -->
+                  
+                  <option value="facturation">Virement</option> 
+                  <option value="livraison">Espèce</option>
+                </select>
+              </div>
+              <div class="blockInfo">
+                <p class="subtitle">Montant</p>
+                <input id="montant" class="itemForm" type="number" placeholder="100">
+              </div>
+              <div class="blockInfo">
+                <p class="subtitle">Date</p>
+                <input id="datePaiement" class="itemForm" type="date">
+                <script type="text/javascript">
+                  document.getElementById("datePaiement").placeholder = new Date().toLocaleDateString();
+                </script>
+              </div>
+            </div>
+          </div>
+
+          <div class="productsBox">
+            <br />
+            <p class="subtitle">Articles</p>
+            <div class="onglets">
+              <button id="addProduct" class="ongletProduct onglet addOnglet"></button>
+            </div>
+            <div class="formBox box">
+              Ajouter des articles...
+            </div>
+          </div>
+        </div>
+        
+        
+
+        
       </div>
     </div>
   </body>
