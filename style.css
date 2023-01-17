@@ -91,12 +91,16 @@
     background: url("Icons/search.svg") top right    no-repeat;
 }
 
-#listBox {
+.listBox {
     background-color: #FBFBFB;
     margin-top: 40px;
     margin-left: 5%;
     margin-right: 5%;
     height: 150px;
+}
+
+.listTitleDiv {
+    background-color: transparent;
     display: flex;
     flex-direction: row;
 }
@@ -329,5 +333,25 @@ input::-webkit-inner-spin-button {
 
 .ongletProduct {
     float: right;
+}
+
+.listClient {
+    background-color: transparent;
+    margin-top: 25px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.elementThead {
+    background-color: #058ED9;
+    color: white;
+    border: none;
+}
+
+.elementTbody {
+    background-color: #ECECEC;
+    text-align: center;
+    border: 1px solid #A4A4A4;
+    line-height: 20px;
 }
 

@@ -16,8 +16,16 @@
   </head>
 
   <body>
+    <?php
+      $hostName = "localhost";
+      $userName = "root";
+      $password = "";
+      $dbName = "BDD";
+      $conn= new mysqli($hostName, $userName, $password, $dbName);
+    ?> <!-- Connection to the database -->
+
     <div id="menu">
-      <div class="submenu" id="clients"><span class="title">Clients bjr bjr</span></div>
+      <div class="submenu" id="clients"><span class="title">Clients</span></div>
       <div class="submenu" id="orders"><span class="title">Commandes</span></div>
     </div>
 
@@ -29,7 +37,8 @@
       <input id="searchBar" placeholder="Rechercher" type="text">
     </div>
     
-    <div id="listBox" class="box">
+    <div class="listBox box">
+      <div class="listTitleDiv">
         <p id="listTitle" class="titleSection">
           <img src="Icons/list.svg" alt="list icon" class="icon">
           Liste des clients
@@ -38,6 +47,45 @@
           <img src="Icons/add.svg" alt="add icon" class="icon">
           Ajouter un client
         </p>
+      </div>
+
+      <?php
+        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client ASC";
+        $result = $conn->query($sql);
+       ?> <!-- Récupération des infos clients -->
+      <table class="listClient">
+        <thead>
+          <tr>
+            <th class="elementThead">ID</th>
+            <th class="elementThead">Nom</th>
+            <th class="elementThead">Facebook</th>
+            <th class="elementThead">Instagram</th>
+            <th class="elementThead">Mail</th>
+            <th class="elementThead">Adresse</th>
+            <th class="elementThead">Téléphone</th>
+            <th class="elementThead">Niveau</th>
+            <th class="elementThead">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+            while($row = $result->fetch_assoc()) {
+              echo "<tr>";
+              echo "<td class='elementTbody'>".$row["id_client"]."</td>";
+              echo "<td class='elementTbody'>".$row["nom_client"]." ".$row["prenom_client"]."</td>";
+              echo "<td class='elementTbody'>".$row["fb"]."</td>";
+              echo "<td class='elementTbody'>".$row["insta"]."</td>";
+              echo "<td class='elementTbody'>".$row["mail"]."</td>";
+              echo "<td class='elementTbody'>"."not yet"."</td>";
+              echo "<td class='elementTbody'>"."not yet"."</td>";
+              echo "<td class='elementTbody'>".$row["membership"]."</td>";
+              echo "<td class='elementTbody'>"."not yet"."</td>";
+              echo "</tr>";
+            }
+          ?>
+
+        </tbody>
+      </table>
     </div>
 
     <!-- Overlay Client -->
@@ -188,11 +236,16 @@
             <div class="formBox box">
               <div class="blockInfo">
                 <p class="subtitle">Type</p>
+                <?php
+                    $sql = "SELECT nom_mode_paiement FROM mode_paiement ORDER BY nom_mode_paiement ASC";
+                    $result = $conn->query($sql);
+                ?> <!-- Récupération des modes de paiement -->
                 <select id="dropdownPaiement" class="itemForm">
-                  <!-- Les options viendront de la bdd -->
-                  
-                  <option value="facturation">Virement</option> 
-                  <option value="livraison">Espèce</option>
+                <?php
+                    while($row = $result->fetch_assoc()) {
+                      echo "<option value='" .$row["nom_mode_paiement"]. "'>" .$row["nom_mode_paiement"]. "</option>";
+                    }
+                ?> <!-- Affichage des modes de paiement -->
                 </select>
               </div>
               <div class="blockInfo">
