@@ -50,7 +50,8 @@
       </div>
 
       <?php
-        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client ASC";
+        $sql = "SELECT DISTINCT * FROM client INNER JOIN telephone ON client.id_client = telephone.id_client
+        INNER JOIN adresse ON client.id_client = adresse.id_client ORDER BY client.id_client ASC";
         $result = $conn->query($sql);
        ?> <!-- Récupération des infos clients -->
       <table class="listClient">
@@ -72,14 +73,17 @@
             while($row = $result->fetch_assoc()) {
               echo "<tr>";
               echo "<td class='elementTbody'>".$row["id_client"]."</td>";
-              echo "<td class='elementTbody'>".$row["nom_client"]." ".$row["prenom_client"]."</td>";
+              echo "<td class='elementTbody'>".$row["prenom_client"]." ".$row["nom_client"]."</td>";
               echo "<td class='elementTbody'>".$row["fb"]."</td>";
               echo "<td class='elementTbody'>".$row["insta"]."</td>";
               echo "<td class='elementTbody'>".$row["mail"]."</td>";
-              echo "<td class='elementTbody'>"."not yet"."</td>";
-              echo "<td class='elementTbody'>"."not yet"."</td>";
+              echo "<td class='elementTbody'>".$row["num_voie"].", ".$row["voie"]." ".$row["code_postal"]." ".$row["pays"]."</td>";
+              echo "<td class='elementTbody'>".$row["num_telephone"]."</td>";
               echo "<td class='elementTbody'>".$row["membership"]."</td>";
-              echo "<td class='elementTbody'>"."not yet"."</td>";
+              $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$row["id_client"]."'";
+              $result = $conn->query($sql);
+              $nb_point = $result->fetch_assoc();
+              echo "<td class='elementTbody'>".$nb_point["SUM(nb_points)"]."</td>";
               echo "</tr>";
             }
           ?>
