@@ -165,7 +165,6 @@ function selectAdr(n) {
 // Orders
 
 function switchOrders() {
-    console.log(isOnClients);
     if (isOnClients) {
         document.getElementById("clients").style.borderBottom = "4px solid transparent";
         document.getElementById("orders").style.borderBottom = "4px solid #22333B";
@@ -181,7 +180,7 @@ function switchOrders() {
         exportBtn.innerHTML = "<img src='Icons/export.svg' alt='export icon' class='icon'> Exporter";
         exportBtn.id = "exportBtn";
         exportBtn.className = "titleSection";
-        listBox.appendChild(exportBtn);
+        listBox.appendChild(exportBtn); // POURQUOI Y'A UN PROBLEME ICI
 
         // add interactions
         document.getElementById("addTitle").removeEventListener("click", addClient);
