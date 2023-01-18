@@ -26,6 +26,7 @@ document.getElementById("orders").addEventListener("click", switchOrders);  // s
 document.getElementById("addTitle").addEventListener("click", addClient);
 
 function switchClients() {
+    console.log(isOnClients);
     if (!isOnClients) {
         document.getElementById("clients").style.borderBottom = "4px solid #22333B";    
         document.getElementById("orders").style.borderBottom = "4px solid transparent";
@@ -164,6 +165,7 @@ function selectAdr(n) {
 // Orders
 
 function switchOrders() {
+    console.log(isOnClients);
     if (isOnClients) {
         document.getElementById("clients").style.borderBottom = "4px solid transparent";
         document.getElementById("orders").style.borderBottom = "4px solid #22333B";
@@ -174,7 +176,7 @@ function switchOrders() {
         document.getElementById("addTitle").innerHTML = "<img src='Icons/add.svg' alt='add icon' class='icon'> Ajouter une commande";
     
         // add export button
-        var listBox = document.getElementById("listBox");
+        var listBox = document.getElementById("listTitleDiv");
         var exportBtn = document.createElement("p");
         exportBtn.innerHTML = "<img src='Icons/export.svg' alt='export icon' class='icon'> Exporter";
         exportBtn.id = "exportBtn";

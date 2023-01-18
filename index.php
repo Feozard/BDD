@@ -37,7 +37,7 @@
       <input id="searchBar" placeholder="Rechercher" type="text">
     </div>
     
-    <div class="listBox box">
+    <div id="listBox" class="box">
       <div class="listTitleDiv">
         <p id="listTitle" class="titleSection">
           <img src="Icons/list.svg" alt="list icon" class="icon">
@@ -72,7 +72,15 @@
           <?php
             while($row = $result->fetch_assoc()) {
               echo "<tr>";
-              echo "<td class='elementTbody'>".$row["id_client"]."</td>";
+              echo "<td class='elementTbody' id='click_id_client'>".$row["id_client"]."</td>";
+              ?>
+              <script src="./displayInfo.js"></script>
+              <!-- manque les infos des points, function à part ? -->
+              <!-- pareil pour adresse et téléphone parce que possibilité d'avoir plusieurs adresses et téléphones -->
+              <script type="text/javascript">
+                document.getElementById("click_id_client").addEventListener("click", () => { viewClient(<?php echo json_encode($row); ?>); });
+              </script>
+          <?php
               echo "<td class='elementTbody'>".$row["prenom_client"]." ".$row["nom_client"]."</td>";
               echo "<td class='elementTbody'>".$row["fb"]."</td>";
               echo "<td class='elementTbody'>".$row["insta"]."</td>";
@@ -80,19 +88,18 @@
               echo "<td class='elementTbody'>".$row["num_voie"].", ".$row["voie"]." ".$row["code_postal"]." ".$row["pays"]."</td>";
               echo "<td class='elementTbody'>".$row["num_telephone"]."</td>";
               echo "<td class='elementTbody'>".$row["membership"]."</td>";
-              $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$row["id_client"]."'";
+              $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$row["id_client"]."'"; // Récupération de la somme des points
               $result = $conn->query($sql);
               $nb_point = $result->fetch_assoc();
               echo "<td class='elementTbody'>".$nb_point["SUM(nb_points)"]."</td>";
               echo "</tr>";
             }
-          ?>
-
+          ?> <!-- Affichage des infos clients -->
         </tbody>
       </table>
     </div>
 
-    <!-- Overlay Client -->
+    <!-- Overlay Add Client -->
     <div id="overlayAddClient">
       <div class="fidelity">
         <p class="subtitle">Fidélité</p>
@@ -191,6 +198,97 @@
             <input id="zip" class="itemForm" placeholder="75000">
             <p class="subtitle secondItem">Pays</p>
             <input id="pays" class="itemForm" placeholder="France">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay View Client -->
+    <div id="overlayViewClient">
+      <div class="fidelity">
+        <p class="subtitle">Fidélité</p>
+        <div class="fidelityBox box">
+          <p class="subtitle">Niveau</p>
+          <select id="dropdownLevel" class="itemFormFidelity">
+            <option value="-">-</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+            <option value="Ultimate">Ultimate</option>
+          </select>
+          <p class="subtitle">Points</p>
+          <input id="nbPointsView" class="itemFormFidelity" placeholder="0" type="number" readonly>
+        </div>
+      </div>
+
+      <div class="formClient">
+        <button class="closeButton" id="closeButtonViewClient"></button>
+        <p class="subtitle">Identité</p>
+        <div class="formBox box">
+          <div class="blockInfo">
+            <p class="subtitle">ID</p>
+            <input id="id_clientView" class="itemForm" placeholder="ID" type="text" readonly>
+          </div>
+          <div class="blockInfo">
+            <p class="subtitle">Nom</p>
+            <input id="lastNameView" class="itemForm" placeholder="Martin" type="text" readonly>
+            <p class="subtitle secondItem">Prénom</p>
+            <input id="firstNameView" class="itemForm" placeholder="Marie" type="text" readonly>
+          </div>
+        </div>
+
+        <br />
+        <p class="subtitle">Coordonnées</p>
+        <div class="formBox box">
+          <div id="telBox">
+            <div class="blockInfo">
+              <p class="subtitle" id="telNum1">Tél.</p>
+              <input id="codePhoneView" class="itemForm code_region" type="text" readonly>
+              <input id="phoneView" class="itemForm" type="tel" readonly>
+            </div>
+          </div>
+          <div class="blockInfo">
+            <p class="subtitle">Mail</p>
+            <input id="mailView" class="itemForm" placeholder="marie.martin@hotmail.fr">
+          </div>
+          <div class="blockInfo">
+            <p class="subtitle">Facebook</p>
+            <input id="facebookView" class="itemForm" placeholder="fb.1234">
+            <p class="subtitle secondItem">Instagram</p>
+            <input id="instagramView" class="itemForm" placeholder="insta.1234">
+          </div>
+        </div>
+
+        <br />
+        <p class="subtitle">Adresse(s)</p>
+        <div class="onglets" id="ongletsAdr">
+          <button class="onglet" id="adr1">Adr. 1</button>
+        </div>
+        <div class="formBox box">
+          <div class="blockInfo">
+            <p class="subtitle">Type</p>
+            <select id="dropdownAdr" class="itemForm">
+              <option value="facturation">Facturation</option>
+              <option value="livraison">Livraison</option>
+            </select>
+          </div>
+          <div class="blockInfo">
+            <p class="subtitle">Num. Voie</p>
+            <input id="numVoieView" class="itemForm" placeholder="1" readonly>
+          </div>
+          <div class="blockInfo">
+            <p class="subtitle">Voie</p>
+            <input id="voieView" class="itemForm" placeholder="Rue de la Paix" readonly>
+          </div>
+          <div class="blockInfo">
+            <p class="subtitle">Ville</p>
+            <input id="villeView" class="itemForm" placeholder="Paris" readonly>
+          </div>
+          <div class="blockInfo">
+            <p class="subtitle">Code postal</p>
+            <input id="zipView" class="itemForm" placeholder="75000" readonly>
+            <p class="subtitle secondItem">Pays</p>
+            <input id="paysView" class="itemForm" placeholder="France" readonly>
           </div>
         </div>
       </div>
