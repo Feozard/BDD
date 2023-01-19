@@ -74,10 +74,20 @@
               $i++;
               $sql = "SELECT * FROM adresse WHERE id_client = '".$info["id_client"]."'"; // Récupération des adresses
               $adresses = $conn->query($sql);
+              $arrayAdr = [];
+              while($adr = $adresses->fetch_assoc()) {  // Construction du tableau d'adresse
+                array_push($arrayAdr, $adr);
+              }
+              $adresses = $conn->query($sql); // Pour pouvoir refaire un fetch_assoc
 
-              $sql = "SELECT num_telephone FROM telephone WHERE id_client = '".$info["id_client"]."'"; // Récupération des numéros de téléphone
+              $sql = "SELECT * FROM telephone WHERE id_client = '".$info["id_client"]."'"; // Récupération des numéros de téléphone
               $nums = $conn->query($sql);
-
+              $arrayNum = [];
+              while($num = $nums->fetch_assoc()) {  // Construction du tableau d'info des numéros de téléphone
+                array_push($arrayNum, $num);
+              }
+              $nums = $conn->query($sql); // Pour pouvoir refaire un fetch_assoc
+              
               $sql = "SELECT * FROM points WHERE id_client = '".$info["id_client"]."'"; // Récupération des info points
               $points = $conn->query($sql);
 
@@ -89,13 +99,15 @@
               echo "<td class='elementTbody' id='click_id_client".$i."'>".$info["id_client"]."</td>";
               ?>
 
-              <script src="./displayInfo.js"></script>
+              <script src="./viewClient.js"></script>
               <script type="text/javascript">
                 document.getElementById("click_id_client" + <?php echo $i; ?>).style.cursor = 'pointer';
+
+
                 document.getElementById("click_id_client" + <?php echo $i; ?>).addEventListener("click", () => {
                   viewClient(<?php echo json_encode($info); ?>,
-                  <?php echo json_encode($nums); ?>,
-                  <?php echo json_encode($adresses); ?>,
+                  <?php echo json_encode($arrayNum); ?>,
+                  <?php echo json_encode($arrayAdr); ?>,
                   <?php echo json_encode($points); ?>,
                   <?php echo $nb_point["SUM(nb_points)"]; ?>)
                 });
@@ -116,6 +128,7 @@
               // Téléphones
               $numsStr = '';
               while($num = $nums->fetch_assoc()) {  // Construction de la liste des numéros de téléphone
+                
                 $numsStr .= $num["num_telephone"]."<br>";
               }
               echo "<td class='elementTbody'>".$numsStr."</td>"; // Affichage de la liste des numéros de téléphone
@@ -132,281 +145,10 @@
       </table>
     </div>
 
-    <!-- Overlay Add Client -->
-    <div id="overlayAddClient">
-      <div class="fidelity">
-        <p class="subtitle">Fidélité</p>
-        <div class="fidelityBox box">
-          <p class="subtitle">Niveau</p>
-          <select id="dropdownLevel" class="itemFormFidelity">
-            <option value="-">-</option>
-            <option value="Silver">Silver</option>
-            <option value="Gold">Gold</option>
-            <option value="Platinum">Platinum</option>
-            <option value="Ultimate">Ultimate</option>
-          </select>
-          <p class="subtitle">Points</p>
-          <input id="nbPoints" class="itemFormFidelity" placeholder="0" type="number">
-        </div>
-      </div>
-
-      <div class="formClient">
-        <button class="closeButton" id="closeButtonClient"></button>
-        <p class="subtitle">Identité</p>
-        <div class="formBox box">
-          <div class="blockInfo">
-            <p class="subtitle">ID</p>
-            <input id="id_client" class="itemForm" placeholder="ID" type="text" readonly>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Nom</p>
-            <input id="lastName" class="itemForm" placeholder="Martin" type="text">
-            <p class="subtitle secondItem">Prénom</p>
-            <input id="firstName" class="itemForm" placeholder="Marie" type="text">
-          </div>
-        </div>
-
-        <br />
-        <p class="subtitle">Coordonnées</p>
-        <div class="formBox box">
-          <div id="telBox">
-            <div class="blockInfo">
-              <p class="subtitle" id="telNum1">Tél.</p>
-              <!-- <input id="phone" type="tel">
-              <script src="./Phone/build/js/intlTelInput.js"></script>
-              <script>
-                var input = document.querySelector("#phone");
-                window.intlTelInput(input, {
-                  // any initialisation options go here
-                });
-              </script> -->
-              <select id="dropdownTel" class="itemForm">
-                <option value="+33">+33</option>
-                <option value="autre">autre</option>
-              </select>
-              <input id="phone" class="itemForm" placeholder="06 12 34 56 78" type="tel">
-              <button id="addTel" class="itemForm"></button>
-            </div>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Mail</p>
-            <input id="mail" class="itemForm" placeholder="marie.martin@hotmail.fr">
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Facebook</p>
-            <input id="facebook" class="itemForm" placeholder="fb.1234">
-            <p class="subtitle secondItem">Instagram</p>
-            <input id="instagram" class="itemForm" placeholder="insta.1234">
-          </div>
-        </div>
-
-        <br />
-        <p class="subtitle">Adresse(s)</p>
-        <div class="onglets" id="ongletsAdr">
-          <button class="onglet" id="adr1">Adr. 1</button>
-          <button class="onglet addOnglet" id="addAdr"></button>
-        </div>
-        <div class="formBox box">
-          <div class="blockInfo">
-            <p class="subtitle">Type</p>
-            <select id="dropdownAdr" class="itemForm">
-              <option value="facturation">Facturation</option>
-              <option value="livraison">Livraison</option>
-            </select>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Num. Voie</p>
-            <input id="numVoie" class="itemForm" placeholder="1">
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Voie</p>
-            <input id="voie" class="itemForm" placeholder="Rue de la Paix">
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Ville</p>
-            <input id="ville" class="itemForm" placeholder="Paris">
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Code postal</p>
-            <input id="zip" class="itemForm" placeholder="75000">
-            <p class="subtitle secondItem">Pays</p>
-            <input id="pays" class="itemForm" placeholder="France">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Overlay View Client -->
-    <div id="overlayViewClient">
-      <div class="fidelity">
-        <p class="subtitle">Fidélité</p>
-        <div class="fidelityBox box">
-          <p class="subtitle">Niveau</p>
-          <input id="levelView" class="itemFormFidelity" type="text" readonly> 
-          <p class="subtitle">Points</p>
-          <input id="nbPointsView" class="itemFormFidelity" type="number" readonly>
-        </div>
-      </div>
-
-      <div class="formClient">
-        <button class="closeButton" id="closeButtonViewClient"></button>
-        <p class="subtitle">Identité</p>
-        <div class="formBox box">
-          <div class="blockInfo">
-            <p class="subtitle">ID</p>
-            <input id="id_clientView" class="itemForm" type="text" readonly>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Nom</p>
-            <input id="lastNameView" class="itemForm" type="text" readonly>
-            <p class="subtitle secondItem">Prénom</p>
-            <input id="firstNameView" class="itemForm" type="text" readonly>
-          </div>
-        </div>
-
-        <br />
-        <p class="subtitle">Coordonnées</p>
-        <div class="formBox box">
-          <div id="telBox">
-            <div class="blockInfo">
-              <p class="subtitle" id="telNum1">Tél.</p>
-              <input id="codePhoneView" class="itemForm code_region" type="text" readonly>
-              <input id="phoneView" class="itemForm" type="tel" readonly>
-            </div>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Mail</p>
-            <input id="mailView" class="itemForm">
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Facebook</p>
-            <input id="facebookView" class="itemForm">
-            <p class="subtitle secondItem">Instagram</p>
-            <input id="instagramView" class="itemForm">
-          </div>
-        </div>
-
-        <br />
-        <p class="subtitle">Adresse(s)</p>
-        <div class="onglets" id="ongletsAdr">
-          <button class="onglet" id="adr1">Adr. 1</button>
-        </div>
-        <div class="formBox box">
-          <div class="blockInfo">
-            <p class="subtitle">Type</p>
-            <select id="dropdownAdr" class="itemForm">
-              <option value="facturation">Facturation</option>
-              <option value="livraison">Livraison</option>
-            </select>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Num. Voie</p>
-            <input id="numVoieView" class="itemForm" readonly>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Voie</p>
-            <input id="voieView" class="itemForm" readonly>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Ville</p>
-            <input id="villeView" class="itemForm" readonly>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">Code postal</p>
-            <input id="zipView" class="itemForm" readonly>
-            <p class="subtitle secondItem">Pays</p>
-            <input id="paysView" class="itemForm" readonly>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Overlay Order -->
-    <div id="overlayAddOrder">
-      <div class="formOrder">
-        <button class="closeButton" id="closeButtonOrder"></button>
-
-        <p class="subtitle">Informations</p>
-        <div class="formBox box">
-          <div class="blockInfo">
-            <p class="subtitle">ID</p>
-            <input id="id_order" class="itemForm" placeholder="ID" type="text" readonly>
-            <p class="subtitle secondItem">Date</p>
-            <input id="date" class="itemForm" type="date">
-            <script type="text/javascript">
-              document.getElementById("date").placeholder = new Date().toLocaleDateString();
-            </script>
-            <p class="subtitle secondItem">Statut</p>
-            <select id="dropdownStatus" class="itemForm">
-              <option value="à payer">À payer</option>
-              <option value="payée">Payée</option>
-              <option value="empaqueté">Empaquetée</option>
-              <option value="envoyée">Envoyée</option>
-              <option value="livrée">Livrée</option>
-              <option value="terminée">Terminée</option>
-            </select>
-          </div>
-          <div class="blockInfo">
-            <p class="subtitle">ID Client</p>
-            <input id="id_client_order" class="itemForm" placeholder="ID" type="text">
-            <p class="subtitle secondItem">Nom client</p>
-            <input id="name_client_order" class="itemForm" placeholder="Marie Martin" type="text" readonly>
-          </div>
-        </div>
-
-        <div class="blockFormBox">
-          <div class="paiementBox">
-            <br />
-            <p class="subtitle">Paiement</p>
-            <div class="onglets" id="ongletsPaiement">
-              <button class="onglet" id="paiement1">P1</button>
-              <button class="onglet addOnglet" id="addPaiement"></button>
-            </div>
-            <div class="formBox box">
-              <div class="blockInfo">
-                <p class="subtitle">Type</p>
-                <?php
-                    $sql = "SELECT nom_mode_paiement FROM mode_paiement ORDER BY nom_mode_paiement ASC";
-                    $result = $conn->query($sql);
-                ?> <!-- Récupération des modes de paiement -->
-                <select id="dropdownPaiement" class="itemForm">
-                <?php
-                    while($row = $result->fetch_assoc()) {
-                      echo "<option value='" .$row["nom_mode_paiement"]. "'>" .$row["nom_mode_paiement"]. "</option>";
-                    }
-                ?> <!-- Affichage des modes de paiement -->
-                </select>
-              </div>
-              <div class="blockInfo">
-                <p class="subtitle">Montant</p>
-                <input id="montant" class="itemForm" type="number" placeholder="100">
-              </div>
-              <div class="blockInfo">
-                <p class="subtitle">Date</p>
-                <input id="datePaiement" class="itemForm" type="date">
-                <script type="text/javascript">
-                  document.getElementById("datePaiement").placeholder = new Date().toLocaleDateString();
-                </script>
-              </div>
-            </div>
-          </div>
-
-          <div class="productsBox">
-            <br />
-            <p class="subtitle">Articles</p>
-            <div class="onglets">
-              <button id="addProduct" class="ongletProduct onglet addOnglet"></button>
-            </div>
-            <div class="formBox box">
-              Ajouter des articles...
-            </div>
-          </div>
-        </div>
-        
-        
-
-        
-      </div>
-    </div>
+    <?php
+			include 'addClient.php';
+      include 'viewClient.php';
+      include 'addOrder.php';
+		?>
   </body>
 </html>

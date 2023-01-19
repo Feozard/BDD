@@ -130,7 +130,7 @@ function addAdr() {
 
     var newAdr = document.createElement("button");
     newAdr.id = "adr" + nbAdr;
-    newAdr.className = "ongletAdr";
+    newAdr.className = "onglet";
     newAdr.innerHTML = "Adr. " + nbAdr;
     newAdr.addEventListener("click", () => {
         selectAdr(nbAdr);

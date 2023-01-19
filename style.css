@@ -231,7 +231,7 @@ input::-webkit-inner-spin-button {
     cursor: pointer;
 }
 
-#telBox {
+.telBox {
     background-color: transparent;
     display: flex;
     flex-direction: column;
