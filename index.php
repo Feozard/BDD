@@ -8,7 +8,7 @@
     <title>BDD</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./Phone/build/css/intlTelInput.css">
-    <script type ="module" src="./index.js" defer></script>
+    <script type ="module" src="./Scripts/index.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bellota+Text:wght@300;700&display=swap" rel="stylesheet">
@@ -99,7 +99,7 @@
               echo "<td class='elementTbody' id='click_id_client".$i."'>".$info["id_client"]."</td>";
               ?>
 
-              <script src="./viewClient.js"></script>
+              <script src="./Scripts/viewClient.js"></script>
               <script type="text/javascript">
                 document.getElementById("click_id_client" + <?php echo $i; ?>).style.cursor = 'pointer';
 

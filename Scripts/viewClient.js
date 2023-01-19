@@ -53,8 +53,8 @@ function viewClient(info, telephone, adresses, points, sum_points) {
 
     // Reste affichage de l'historique des points
 
+    console.log("add close function");
     document.getElementById("closeButtonViewClient").addEventListener("click", () => { closeOverlay(nbTel, nbAdr) });    // close overlay
-
 }
 
 function addPhoneView(n) {  // add a new phone view
@@ -115,15 +115,24 @@ function selectAdr(i, adresses) { // select an address
 }
 
 function closeOverlay(nbTel, nbAdr) {
-    document.getElementById("overlayViewClient").style.display = "none";
+    //document.getElementById("overlayViewClient").style.display = "none";
+    console.log("close");
     clearOverlay(nbTel, nbAdr);
 }
 
 function clearOverlay(nbTel, nbAdr) {  // clear all the added elements (phones, addresses, etc...)
-    for (let i = 1; i < nbTel; i++) {
-        document.getElementById("tel" + i).remove();
+    document.getElementById("closeButtonViewClient").removeEventListener("click", closeOverlay);   // remove previous event
+    console.log("clear");
+    console.log(nbTel);
+    console.log(nbAdr);
+    if (nbTel > 1) {
+        for (let i = 1; i < nbTel; i++) {
+            document.getElementById("tel" + i).remove();
+        }
     }
-    for (let i = 1; i < nbAdr; i++) {
-        document.getElementById("adrView" + (i+1)).remove();
+    if (nbAdr > 1) {
+        for (let i = 1; i < nbAdr; i++) {
+            document.getElementById("adrView" + (i+1)).remove();
+        }
     }
 }

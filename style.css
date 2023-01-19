@@ -278,10 +278,24 @@ input::-webkit-inner-spin-button {
     background-image: url(Icons/close.svg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 15px 15px;
+    background-size: 15px;
     width: 25px;
     height: 25px;
     cursor: pointer;
+    border: none;
+    background-color: transparent;
+    float: right;
+}
+
+.validateButton {
+    background-image: url(Icons/confirm.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    margin-top: 8px;
     border: none;
     background-color: transparent;
     float: right;
