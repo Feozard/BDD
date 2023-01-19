@@ -50,9 +50,9 @@
       </div>
 
       <?php
-        $sql = "SELECT DISTINCT * FROM client INNER JOIN telephone ON client.id_client = telephone.id_client
-        INNER JOIN adresse ON client.id_client = adresse.id_client ORDER BY client.id_client ASC";
-        $result = $conn->query($sql);
+        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client ASC";  // Récupération des infos clients
+        $infos = $conn->query($sql);
+        $i = 0;
        ?> <!-- Récupération des infos clients -->
       <table class="listClient">
         <thead>
@@ -70,28 +70,61 @@
         </thead>
         <tbody>
           <?php
-            while($row = $result->fetch_assoc()) {
-              echo "<tr>";
-              echo "<td class='elementTbody' id='click_id_client'>".$row["id_client"]."</td>";
-              ?>
-              <script src="./displayInfo.js"></script>
-              <!-- manque les infos des points, function à part ? -->
-              <!-- pareil pour adresse et téléphone parce que possibilité d'avoir plusieurs adresses et téléphones -->
-              <script type="text/javascript">
-                document.getElementById("click_id_client").addEventListener("click", () => { viewClient(<?php echo json_encode($row); ?>); });
-              </script>
-          <?php
-              echo "<td class='elementTbody'>".$row["prenom_client"]." ".$row["nom_client"]."</td>";
-              echo "<td class='elementTbody'>".$row["fb"]."</td>";
-              echo "<td class='elementTbody'>".$row["insta"]."</td>";
-              echo "<td class='elementTbody'>".$row["mail"]."</td>";
-              echo "<td class='elementTbody'>".$row["num_voie"].", ".$row["voie"]." ".$row["code_postal"]." ".$row["pays"]."</td>";
-              echo "<td class='elementTbody'>".$row["num_telephone"]."</td>";
-              echo "<td class='elementTbody'>".$row["membership"]."</td>";
-              $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$row["id_client"]."'"; // Récupération de la somme des points
+            while($info = $infos->fetch_assoc()) {
+              $i++;
+              $sql = "SELECT * FROM adresse WHERE id_client = '".$info["id_client"]."'"; // Récupération des adresses
+              $adresses = $conn->query($sql);
+
+              $sql = "SELECT num_telephone FROM telephone WHERE id_client = '".$info["id_client"]."'"; // Récupération des numéros de téléphone
+              $nums = $conn->query($sql);
+
+              $sql = "SELECT * FROM points WHERE id_client = '".$info["id_client"]."'"; // Récupération des info points
+              $points = $conn->query($sql);
+
+              $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$info["id_client"]."'"; // Récupération de la somme des points
               $result = $conn->query($sql);
               $nb_point = $result->fetch_assoc();
-              echo "<td class='elementTbody'>".$nb_point["SUM(nb_points)"]."</td>";
+
+              echo "<tr>";
+              echo "<td class='elementTbody' id='click_id_client".$i."'>".$info["id_client"]."</td>";
+              ?>
+
+              <script src="./displayInfo.js"></script>
+              <script type="text/javascript">
+                document.getElementById("click_id_client" + <?php echo $i; ?>).style.cursor = 'pointer';
+                document.getElementById("click_id_client" + <?php echo $i; ?>).addEventListener("click", () => {
+                  viewClient(<?php echo json_encode($info); ?>,
+                  <?php echo json_encode($nums); ?>,
+                  <?php echo json_encode($adresses); ?>,
+                  <?php echo json_encode($points); ?>,
+                  <?php echo $nb_point["SUM(nb_points)"]; ?>)
+                });
+              </script>
+          <?php
+              echo "<td class='elementTbody'>".$info["prenom_client"]." ".$info["nom_client"]."</td>";
+              echo "<td class='elementTbody'>".$info["fb"]."</td>";
+              echo "<td class='elementTbody'>".$info["insta"]."</td>";
+              echo "<td class='elementTbody'>".$info["mail"]."</td>";
+
+              // Adresses
+              $adressesStr = '';
+              while($adresse = $adresses->fetch_assoc()) {  // Construction de la liste des adresses
+                $adressesStr .= $adresse["num_voie"].", ".$adresse["voie"]." - ".$adresse["code_postal"]." ".$adresse["ville"]." - ".$adresse["pays"]."<br>";
+              }
+              echo "<td class='elementTbody'>".$adressesStr."</td>"; // Affichage de la liste des adresses
+
+              // Téléphones
+              $numsStr = '';
+              while($num = $nums->fetch_assoc()) {  // Construction de la liste des numéros de téléphone
+                $numsStr .= $num["num_telephone"]."<br>";
+              }
+              echo "<td class='elementTbody'>".$numsStr."</td>"; // Affichage de la liste des numéros de téléphone
+
+              echo "<td class='elementTbody'>".$info["membership"]."</td>";
+
+              // Points
+              echo "<td class='elementTbody'>".$nb_point["SUM(nb_points)"]."</td>"; // Affichage de la somme des points
+
               echo "</tr>";
             }
           ?> <!-- Affichage des infos clients -->
@@ -209,15 +242,9 @@
         <p class="subtitle">Fidélité</p>
         <div class="fidelityBox box">
           <p class="subtitle">Niveau</p>
-          <select id="dropdownLevel" class="itemFormFidelity">
-            <option value="-">-</option>
-            <option value="Silver">Silver</option>
-            <option value="Gold">Gold</option>
-            <option value="Platinum">Platinum</option>
-            <option value="Ultimate">Ultimate</option>
-          </select>
+          <input id="levelView" class="itemFormFidelity" type="text" readonly> 
           <p class="subtitle">Points</p>
-          <input id="nbPointsView" class="itemFormFidelity" placeholder="0" type="number" readonly>
+          <input id="nbPointsView" class="itemFormFidelity" type="number" readonly>
         </div>
       </div>
 
@@ -227,13 +254,13 @@
         <div class="formBox box">
           <div class="blockInfo">
             <p class="subtitle">ID</p>
-            <input id="id_clientView" class="itemForm" placeholder="ID" type="text" readonly>
+            <input id="id_clientView" class="itemForm" type="text" readonly>
           </div>
           <div class="blockInfo">
             <p class="subtitle">Nom</p>
-            <input id="lastNameView" class="itemForm" placeholder="Martin" type="text" readonly>
+            <input id="lastNameView" class="itemForm" type="text" readonly>
             <p class="subtitle secondItem">Prénom</p>
-            <input id="firstNameView" class="itemForm" placeholder="Marie" type="text" readonly>
+            <input id="firstNameView" class="itemForm" type="text" readonly>
           </div>
         </div>
 
@@ -249,13 +276,13 @@
           </div>
           <div class="blockInfo">
             <p class="subtitle">Mail</p>
-            <input id="mailView" class="itemForm" placeholder="marie.martin@hotmail.fr">
+            <input id="mailView" class="itemForm">
           </div>
           <div class="blockInfo">
             <p class="subtitle">Facebook</p>
-            <input id="facebookView" class="itemForm" placeholder="fb.1234">
+            <input id="facebookView" class="itemForm">
             <p class="subtitle secondItem">Instagram</p>
-            <input id="instagramView" class="itemForm" placeholder="insta.1234">
+            <input id="instagramView" class="itemForm">
           </div>
         </div>
 
@@ -274,21 +301,21 @@
           </div>
           <div class="blockInfo">
             <p class="subtitle">Num. Voie</p>
-            <input id="numVoieView" class="itemForm" placeholder="1" readonly>
+            <input id="numVoieView" class="itemForm" readonly>
           </div>
           <div class="blockInfo">
             <p class="subtitle">Voie</p>
-            <input id="voieView" class="itemForm" placeholder="Rue de la Paix" readonly>
+            <input id="voieView" class="itemForm" readonly>
           </div>
           <div class="blockInfo">
             <p class="subtitle">Ville</p>
-            <input id="villeView" class="itemForm" placeholder="Paris" readonly>
+            <input id="villeView" class="itemForm" readonly>
           </div>
           <div class="blockInfo">
             <p class="subtitle">Code postal</p>
-            <input id="zipView" class="itemForm" placeholder="75000" readonly>
+            <input id="zipView" class="itemForm" readonly>
             <p class="subtitle secondItem">Pays</p>
-            <input id="paysView" class="itemForm" placeholder="France" readonly>
+            <input id="paysView" class="itemForm" readonly>
           </div>
         </div>
       </div>
