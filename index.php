@@ -21,7 +21,7 @@
       $userName = "root";
       $password = "";
       $dbName = "BDD";
-      $conn= new mysqli($hostName, $userName, $password, $dbName);
+      $conn = new mysqli($hostName, $userName, $password, $dbName);
     ?> <!-- Connection to the database -->
 
     <div id="menu">

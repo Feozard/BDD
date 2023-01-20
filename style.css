@@ -126,6 +126,17 @@
     display: none;
 }
 
+#formAddClient {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+}
+
 #overlayViewClient {
     position: absolute;
     width: 550px;
@@ -299,6 +310,7 @@ input::-webkit-inner-spin-button {
     border: none;
     background-color: transparent;
     float: right;
+    text-indent: -99999px;
 }
 
 #overlayAddOrder {

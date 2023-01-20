@@ -1,6 +1,7 @@
 currentAdr = 1; // current address selected
 
 function viewClient(info, telephone, adresses, points, sum_points) {
+    isClosed = false;
     document.getElementById("overlayViewClient").style.display = "flex";
     document.getElementById("overlayViewClient").style.flexDirection = "row"; // open overlay
 
@@ -53,8 +54,7 @@ function viewClient(info, telephone, adresses, points, sum_points) {
 
     // Reste affichage de l'historique des points
 
-    console.log("add close function");
-    document.getElementById("closeButtonViewClient").addEventListener("click", () => { closeOverlay(nbTel, nbAdr) });    // close overlay
+    document.getElementById("closeButtonViewClient").addEventListener("click", closeOverlay);    // close overlay
 }
 
 function addPhoneView(n) {  // add a new phone view
@@ -114,25 +114,37 @@ function selectAdr(i, adresses) { // select an address
     document.getElementById("paysView").value = adresses[i-1].pays;
 }
 
-function closeOverlay(nbTel, nbAdr) {
-    //document.getElementById("overlayViewClient").style.display = "none";
+function closeOverlay() {
+    document.getElementById("overlayViewClient").style.display = "none";
     console.log("close");
-    clearOverlay(nbTel, nbAdr);
+    document.getElementById("closeButtonViewClient").removeEventListener("click", closeOverlay);   // remove previous event
+    clearOverlay();
 }
 
 function clearOverlay(nbTel, nbAdr) {  // clear all the added elements (phones, addresses, etc...)
-    document.getElementById("closeButtonViewClient").removeEventListener("click", closeOverlay);   // remove previous event
-    console.log("clear");
-    console.log(nbTel);
-    console.log(nbAdr);
-    if (nbTel > 1) {
-        for (let i = 1; i < nbTel; i++) {
-            document.getElementById("tel" + i).remove();
+    let i = 1;
+    let isTel = true;
+    while (isTel) {
+        let tel = document.getElementById("tel" + i);
+        if (tel) {  // if element exists
+            document.getElementById("tel" + i).remove(); // then remove it
+            i++;
+        }
+        else {
+            isTel = false;
         }
     }
-    if (nbAdr > 1) {
-        for (let i = 1; i < nbAdr; i++) {
-            document.getElementById("adrView" + (i+1)).remove();
+
+    i = 2;
+    let isAdr = true;
+    while (isAdr) {
+        let adr = document.getElementById("adrView" + i);
+        if (adr) {  // if element exists
+            document.getElementById("adrView" + i).remove(); // then remove it
+            i++;
+        }
+        else {
+            isAdr = false;
         }
     }
 }
