@@ -1,11 +1,11 @@
 <!-- Overlay Add Client -->
 <div id="overlayAddClient">
-    <form id="formAddClient" method="post" name="createClient" action="index.php">
+    <form id="formAddClient" method="post" name="createClient" action="addedClient.php">
         <div class="fidelity">
             <p class="subtitle">Fidélité</p>
             <div class="fidelityBox box">
                 <p class="subtitle">Niveau</p>
-                <select id="dropdownLevel" class="itemFormFidelity">
+                <select id="dropdownLevel" class="itemFormFidelity" name="membership">
                 <option value="-">-</option>
                 <option value="Silver">Silver</option>
                 <option value="Gold">Gold</option>
@@ -13,23 +13,47 @@
                 <option value="Ultimate">Ultimate</option>
                 </select>
                 <p class="subtitle">Points</p>
-                <input id="nbPoints" class="itemFormFidelity" placeholder="0" type="number">
+                <input id="nbPoints" class="itemFormFidelity" placeholder="0" type="number" name="points">
             </div>
         </div>
 
         <div class="formClient">
-            <button class="closeButton" id="closeButtonClient"></button>
+            <button class="closeButton" id="closeButtonClient" type="button"></button>
             <p class="subtitle">Identité</p>
             <div class="formBox box">
                 <div class="blockInfo">
                 <p class="subtitle">ID</p>
-                <input id="id_client" class="itemForm" placeholder="ID" type="text" readonly>
+                <!-- ID creation -->
+                <script type="text/javascript">
+                    document.getElementById("addTitle").addEventListener("click", generateID); 
+                    function generateID() {
+                        var ID = "";
+                        ID = ID.concat(new Date().getFullYear().toString().substr(2, 3)); // Add year
+                        ID = ID.concat("-");
+
+                        // Get last ID used
+                        <?php
+                            $sql = "SELECT * FROM client ORDER BY id_client DESC LIMIT 1"; // Récupération du dernier ID
+                            $lastID = $conn->query($sql);
+                            $lastID = $lastID->fetch_assoc();
+                        ?>
+                        var lastID = "<?php echo $lastID['id_client']; ?>";
+                        lastID = lastID.toString();
+                        lastID = lastID.substr(3, lastID.length-1);
+                        lastID = parseInt(lastID) + 1;
+                        lastID = lastID.toString();
+
+                        ID = ID.concat(lastID);
+                        document.getElementById("id_client").value = ID; // Display ID value
+                    }
+                </script>
+                <input id="id_client" class="itemForm" type="text" name="id_client" readonly>
                 </div>
                 <div class="blockInfo">
                 <p class="subtitle">Nom</p>
-                <input id="lastName" class="itemForm" placeholder="Martin" type="text">
+                <input id="lastName" class="itemForm" placeholder="Martin" type="text" name="lastName" required>
                 <p class="subtitle secondItem">Prénom</p>
-                <input id="firstName" class="itemForm" placeholder="Marie" type="text">
+                <input id="firstName" class="itemForm" placeholder="Marie" type="text" name="firstName" required>
                 </div>
             </div>
 
@@ -47,27 +71,28 @@
                         // any initialisation options go here
                     });
                     </script> -->
-                    <select id="dropdownTel" class="itemForm">
-                    <option value="+33">+33</option>
-                    <option value="autre">autre</option>
+                    <select id="dropdownTel" class="itemForm" name="codeTel1" type="number" required>
+                        <option value="33">+33</option>
+                        <option value="0">autre</option>
                     </select>
-                    <input id="phone" class="itemForm" placeholder="06 12 34 56 78" type="tel">
+                    <input id="phone" class="itemForm" placeholder="06 12 34 56 78" type="tel" name="numTel1" required>
                     <button id="addTel" class="itemForm"></button>
                 </div>
                 </div>
                 <div class="blockInfo">
                 <p class="subtitle">Mail</p>
-                <input id="mail" class="itemForm" placeholder="marie.martin@hotmail.fr">
+                <input id="mail" class="itemForm" placeholder="marie.martin@hotmail.fr" name="mail">
                 </div>
                 <div class="blockInfo">
                 <p class="subtitle">Facebook</p>
-                <input id="facebook" class="itemForm" placeholder="fb.1234">
+                <input id="facebook" class="itemForm" placeholder="fb.1234" name="fb">
                 <p class="subtitle secondItem">Instagram</p>
-                <input id="instagram" class="itemForm" placeholder="insta.1234">
+                <input id="instagram" class="itemForm" placeholder="insta.1234" name="insta">
                 </div>
             </div>
 
             <br />
+            <!-- /!\ Gérer les adresses /!\ -->
             <p class="subtitle">Adresse(s)</p>
             <div class="onglets" id="ongletsAdr">
                 <button class="onglet" id="adr1">Adr. 1</button>
@@ -76,36 +101,31 @@
             <div class="formBox box">
                 <div class="blockInfo">
                 <p class="subtitle">Type</p>
-                <select id="dropdownAdr" class="itemForm">
+                <select id="dropdownAdr" class="itemForm" required>
                     <option value="facturation">Facturation</option>
                     <option value="livraison">Livraison</option>
                 </select>
                 </div>
                 <div class="blockInfo">
                 <p class="subtitle">Num. Voie</p>
-                <input id="numVoie" class="itemForm" placeholder="1">
+                <input id="numVoie" class="itemForm" placeholder="1" required>
                 </div>
                 <div class="blockInfo">
                 <p class="subtitle">Voie</p>
-                <input id="voie" class="itemForm" placeholder="Rue de la Paix">
+                <input id="voie" class="itemForm" placeholder="Rue de la Paix" required>
                 </div>
                 <div class="blockInfo">
                 <p class="subtitle">Ville</p>
-                <input id="ville" class="itemForm" placeholder="Paris">
+                <input id="ville" class="itemForm" placeholder="Paris" required>
                 </div>
                 <div class="blockInfo">
                 <p class="subtitle">Code postal</p>
-                <input id="zip" class="itemForm" placeholder="75000">
+                <input id="zip" class="itemForm" placeholder="75000" required>
                 <p class="subtitle secondItem">Pays</p>
-                <input id="pays" class="itemForm" placeholder="France">
+                <input id="pays" class="itemForm" placeholder="France" required>
                 </div>
             </div>
             <input type="submit" value="Submit" class="validateButton">
-            <!-- <button class="validateButton" id="validateButtonClient"></button> -->
-            <!-- <script src="./Scripts/addClient.js"></script>
-            <script type="text/javascript">
-                document.getElementById("validateButtonClient").addEventListener("click", createClient);
-            </script> -->
         </div>
     </form>
 </div>

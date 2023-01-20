@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,6 +8,7 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./Phone/build/css/intlTelInput.css">
     <script type ="module" src="./Scripts/index.js" defer></script>
+    <script type ="module" src="./Scripts/addClient.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bellota+Text:wght@300;700&display=swap" rel="stylesheet">
@@ -16,13 +16,14 @@
   </head>
 
   <body>
+    <!-- Connection to the database -->
     <?php
       $hostName = "localhost";
       $userName = "root";
       $password = "";
       $dbName = "BDD";
       $conn = new mysqli($hostName, $userName, $password, $dbName);
-    ?> <!-- Connection to the database -->
+    ?> 
 
     <div id="menu">
       <div class="submenu" id="clients"><span class="title">Clients</span></div>
@@ -50,7 +51,7 @@
       </div>
 
       <?php
-        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client ASC";  // Récupération des infos clients
+        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client DESC";  // Récupération des infos clients
         $infos = $conn->query($sql);
         $i = 0;
        ?> <!-- Récupération des infos clients -->
