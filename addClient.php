@@ -33,17 +33,26 @@
 
                         // Get last ID used
                         <?php
-                            $sql = "SELECT * FROM client ORDER BY id_client DESC LIMIT 1"; // Récupération du dernier ID
+                            $sql = "SELECT * FROM client ORDER BY id_client DESC LIMIT 1"; // Getting last ID used
                             $lastID = $conn->query($sql);
                             $lastID = $lastID->fetch_assoc();
                         ?>
                         var lastID = "<?php echo $lastID['id_client']; ?>";
-                        lastID = lastID.toString();
                         lastID = lastID.substr(3, lastID.length-1);
-                        lastID = parseInt(lastID) + 1;
-                        lastID = lastID.toString();
+                        lastID = parseInt(lastID);
+                        endNewID = lastID + 1;
+                        endNewID = endNewID.toString();
+                        if (endNewID.length == 1) {
+                            endNewID = "000".concat(endNewID);
+                        }
+                        else if (endNewID.length == 2) {
+                            endNewID = "00".concat(endNewID);
+                        }
+                        else if (endNewID.length == 3) {
+                            endNewID = "0".concat(endNewID);
+                        }
 
-                        ID = ID.concat(lastID);
+                        ID = ID.concat(endNewID);
                         document.getElementById("id_client").value = ID; // Display ID value
                     }
                 </script>
@@ -95,34 +104,34 @@
             <!-- /!\ Gérer les adresses /!\ -->
             <p class="subtitle">Adresse(s)</p>
             <div class="onglets" id="ongletsAdr">
-                <button class="onglet" id="adr1">Adr. 1</button>
-                <button class="onglet addOnglet" id="addAdr"></button>
+                <button class="onglet" id="adr1" type="button">Adr. 1</button>
+                <button class="onglet addOnglet" id="addAdr" type="button"></button>
             </div>
             <div class="formBox box">
-                <div class="blockInfo">
-                <p class="subtitle">Type</p>
-                <select id="dropdownAdr" class="itemForm" required>
-                    <option value="facturation">Facturation</option>
-                    <option value="livraison">Livraison</option>
-                </select>
+                <div class="blockInfo" id="dropDownDiv">
+                    <p class="subtitle">Type</p>
+                    <select id="dropdownAdr1" class="itemForm" name="type1">
+                        <option value="Facturation">Facturation</option>
+                        <option value="Livraison">Livraison</option>
+                    </select>
                 </div>
-                <div class="blockInfo">
-                <p class="subtitle">Num. Voie</p>
-                <input id="numVoie" class="itemForm" placeholder="1" required>
+                <div class="blockInfo" id="numVoieDiv">
+                    <p class="subtitle">Num. Voie</p>
+                    <input id="numVoie1" class="itemForm" placeholder="1" name="numVoie1">
                 </div>
-                <div class="blockInfo">
-                <p class="subtitle">Voie</p>
-                <input id="voie" class="itemForm" placeholder="Rue de la Paix" required>
+                <div class="blockInfo" id="voieDiv">
+                    <p class="subtitle">Voie</p>
+                    <input id="voie1" class="itemForm" placeholder="Rue de la Paix" name="voie1">
                 </div>
-                <div class="blockInfo">
-                <p class="subtitle">Ville</p>
-                <input id="ville" class="itemForm" placeholder="Paris" required>
+                <div class="blockInfo" id="villeDiv">
+                    <p class="subtitle">Ville</p>
+                    <input id="ville1" class="itemForm" placeholder="Paris" name="ville1">
                 </div>
-                <div class="blockInfo">
-                <p class="subtitle">Code postal</p>
-                <input id="zip" class="itemForm" placeholder="75000" required>
-                <p class="subtitle secondItem">Pays</p>
-                <input id="pays" class="itemForm" placeholder="France" required>
+                <div class="blockInfo" id="zipDiv">
+                    <p class="subtitle">Code postal</p>
+                    <input id="zip1" class="itemForm" placeholder="75000" name="zip1" style="order: 1">
+                    <p class="subtitle secondItem" id="countrySubtitle" style="order: 2">Pays</p>
+                    <input id="pays1" class="itemForm" placeholder="France" name="pays1" style="order: 3">
                 </div>
             </div>
             <input type="submit" value="Submit" class="validateButton">

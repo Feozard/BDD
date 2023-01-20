@@ -50,11 +50,12 @@
         </p>
       </div>
 
+      <!-- Get client info -->
       <?php
-        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client DESC";  // Récupération des infos clients
+        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client DESC"; 
         $infos = $conn->query($sql);
         $i = 0;
-       ?> <!-- Récupération des infos clients -->
+       ?>
       <table class="listClient">
         <thead>
           <tr>
@@ -70,34 +71,38 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Display client info -->
           <?php
             while($info = $infos->fetch_assoc()) {
               $i++;
-              $sql = "SELECT * FROM adresse WHERE id_client = '".$info["id_client"]."'"; // Récupération des adresses
+              $sql = "SELECT * FROM adresse WHERE id_client = '".$info["id_client"]."'"; // Get addresses
               $adresses = $conn->query($sql);
               $arrayAdr = [];
-              while($adr = $adresses->fetch_assoc()) {  // Construction du tableau d'adresse
+              while($adr = $adresses->fetch_assoc()) {  // Table of addresses
                 array_push($arrayAdr, $adr);
               }
-              $adresses = $conn->query($sql); // Pour pouvoir refaire un fetch_assoc
+              $adresses = $conn->query($sql); // To do another fetch_assoc later
 
-              $sql = "SELECT * FROM telephone WHERE id_client = '".$info["id_client"]."'"; // Récupération des numéros de téléphone
+              $sql = "SELECT * FROM telephone WHERE id_client = '".$info["id_client"]."'"; // Get phone numbers
               $nums = $conn->query($sql);
               $arrayNum = [];
-              while($num = $nums->fetch_assoc()) {  // Construction du tableau d'info des numéros de téléphone
+              while($num = $nums->fetch_assoc()) {  // Table of phone numbers
                 array_push($arrayNum, $num);
               }
-              $nums = $conn->query($sql); // Pour pouvoir refaire un fetch_assoc
+              $nums = $conn->query($sql); // To do another fetch_assoc later
               
-              $sql = "SELECT * FROM points WHERE id_client = '".$info["id_client"]."'"; // Récupération des info points
+              $sql = "SELECT * FROM points WHERE id_client = '".$info["id_client"]."'"; // Get points
               $points = $conn->query($sql);
 
-              $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$info["id_client"]."'"; // Récupération de la somme des points
-              $result = $conn->query($sql);
-              $nb_point = $result->fetch_assoc();
+              $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$info["id_client"]."'"; // Get sum of points
+              $som_point = $conn->query($sql);
+              $nb_point = $som_point->fetch_assoc()["SUM(nb_points)"];
+              if (empty($nb_point)) { // If clients has no points
+                $nb_point = 0;
+              }
 
               echo "<tr>";
-              echo "<td class='elementTbody' id='click_id_client".$i."'>".$info["id_client"]."</td>";
+              echo "<td class='elementTbody' id='click_id_client".$i."'><b>".$info["id_client"]."</b></td>";
               ?>
 
               <script src="./Scripts/viewClient.js"></script>
@@ -110,38 +115,39 @@
                   <?php echo json_encode($arrayNum); ?>,
                   <?php echo json_encode($arrayAdr); ?>,
                   <?php echo json_encode($points); ?>,
-                  <?php echo $nb_point["SUM(nb_points)"]; ?>)
+                  <?php echo $nb_point; ?>)
                 });
               </script>
+
           <?php
               echo "<td class='elementTbody'>".$info["prenom_client"]." ".$info["nom_client"]."</td>";
               echo "<td class='elementTbody'>".$info["fb"]."</td>";
               echo "<td class='elementTbody'>".$info["insta"]."</td>";
               echo "<td class='elementTbody'>".$info["mail"]."</td>";
 
-              // Adresses
+              // Addresses
               $adressesStr = '';
-              while($adresse = $adresses->fetch_assoc()) {  // Construction de la liste des adresses
+              while($adresse = $adresses->fetch_assoc()) {  // List of addresses
                 $adressesStr .= $adresse["num_voie"].", ".$adresse["voie"]." - ".$adresse["code_postal"]." ".$adresse["ville"]." - ".$adresse["pays"]."<br>";
               }
-              echo "<td class='elementTbody'>".$adressesStr."</td>"; // Affichage de la liste des adresses
+              echo "<td class='elementTbody'>".$adressesStr."</td>"; // Display list of addresses
 
-              // Téléphones
+              // Phones
               $numsStr = '';
-              while($num = $nums->fetch_assoc()) {  // Construction de la liste des numéros de téléphone
+              while($num = $nums->fetch_assoc()) {  // List of phone numbers
                 
                 $numsStr .= $num["num_telephone"]."<br>";
               }
-              echo "<td class='elementTbody'>".$numsStr."</td>"; // Affichage de la liste des numéros de téléphone
+              echo "<td class='elementTbody'>".$numsStr."</td>"; // Display list of phone numbers
 
               echo "<td class='elementTbody'>".$info["membership"]."</td>";
 
               // Points
-              echo "<td class='elementTbody'>".$nb_point["SUM(nb_points)"]."</td>"; // Affichage de la somme des points
+              echo "<td class='elementTbody'>".$nb_point."</td>"; // Display sum of points
 
               echo "</tr>";
             }
-          ?> <!-- Affichage des infos clients -->
+          ?> 
         </tbody>
       </table>
     </div>

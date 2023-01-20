@@ -38,13 +38,13 @@
         </div>
         <div class="blockInfo">
         <p class="subtitle">Mail</p>
-        <input id="mailView" class="itemForm">
+        <input id="mailView" class="itemForm" readonly>
         </div>
         <div class="blockInfo">
         <p class="subtitle">Facebook</p>
-        <input id="facebookView" class="itemForm">
+        <input id="facebookView" class="itemForm" readonly>
         <p class="subtitle secondItem">Instagram</p>
-        <input id="instagramView" class="itemForm">
+        <input id="instagramView" class="itemForm" readonly>
         </div>
     </div>
 

@@ -14,7 +14,7 @@ function closeOverlayClient() { // close overlay
     // reset all inputs
     nbAdr = 1;  // reset number of address inputs
     nbTel = 1;  // reset number of tel inputs
-    
+
     document.getElementById("overlayAddClient").style.display = "none";
 }
 
@@ -52,6 +52,7 @@ function addTel() {
 
     var newAddTel = document.createElement("button");
     newAddTel.id = "addTel";
+    newAddTel.type = "button";
     newAddTel.className = "itemForm";
     newAddTel.addEventListener("click", addTel);
 
@@ -65,10 +66,10 @@ function addTel() {
 
 // address management
 document.getElementById("adr1").style.backgroundColor = "white";    // set first address as selected
-var currentAdr = 1; // current selected address (default: 1)
 document.getElementById("adr1").addEventListener("click", () => {   // add function to select first address
     selectAdr(1);
 });
+selectAdr(1);  // select first address by default
 document.getElementById("addAdr").addEventListener("click", addAdr);    // add function to add a new address input
 
 function addAdr() {
@@ -79,6 +80,7 @@ function addAdr() {
     var newAdr = document.createElement("button");
     newAdr.id = "adr" + nbAdr;
     newAdr.className = "onglet";
+    newAdr.type = "button";
     newAdr.innerHTML = "Adr. " + nbAdr;
     newAdr.addEventListener("click", () => {
         selectAdr(nbAdr);
@@ -91,23 +93,105 @@ function addAdr() {
 
     onglets.appendChild(newAdr);
     onglets.appendChild(newAddAdr);
-    
+
+    var newDropDownAdr = document.createElement("select");
+    newDropDownAdr.className = "itemForm";
+    newDropDownAdr.id = "dropdownAdr" + nbAdr;
+    newDropDownAdr.name = "typeAdr" + nbAdr;
+    newDropDownAdr.innerHTML = "<option value='Facturation'>Facturation</option><option value='Livraison'>Livraison</option>";
+    document.getElementById("dropDownDiv").appendChild(newDropDownAdr);
+
+    var newNumVoie = document.createElement("input");
+    newNumVoie.type = "text";
+    newNumVoie.id = "numVoie" + nbAdr;
+    newNumVoie.className = "itemForm";
+    newNumVoie.name = "numVoie" + nbAdr;
+    newNumVoie.placeholder = "1";
+    document.getElementById("numVoieDiv").appendChild(newNumVoie);
+
+    var newVoie = document.createElement("input");
+    newVoie.type = "text";
+    newVoie.id = "voie" + nbAdr;
+    newVoie.className = "itemForm";
+    newVoie.name = "voie" + nbAdr;
+    newVoie.placeholder = "Rue de la Paix";
+    document.getElementById("voieDiv").appendChild(newVoie);
+
+    var newVille = document.createElement("input");
+    newVille.type = "text";
+    newVille.id = "ville" + nbAdr;
+    newVille.className = "itemForm";
+    newVille.name = "ville" + nbAdr;
+    newVille.placeholder = "Paris";
+    document.getElementById("villeDiv").appendChild(newVille);
+
+    var newCodePostal = document.createElement("input");
+    newCodePostal.type = "text";
+    newCodePostal.id = "zip" + nbAdr;
+    newCodePostal.className = "itemForm";
+    newCodePostal.name = "zip" + nbAdr;
+    newCodePostal.placeholder = "75000";
+    newCodePostal.style.order = "1";
+    document.getElementById("zipDiv").appendChild(newCodePostal);
+    document.getElementById("countrySubtitle").style.order = "2";
+
+    var newPays = document.createElement("input");
+    newPays.type = "text";
+    newPays.id = "pays" + nbAdr;
+    newPays.className = "itemForm";
+    newPays.name = "pays" + nbAdr;
+    newPays.placeholder = "France";
+    newPays.style.order = "3";
+    document.getElementById("zipDiv").appendChild(newPays);
     selectAdr(nbAdr);
 }
 
 function selectAdr(n) {
-    document.getElementById("adr" + currentAdr).style.backgroundColor = "#B4B4B4";    // unselect current address
-    currentAdr = n;
-    document.getElementById("adr" + currentAdr).style.backgroundColor = "white";    // select new address
+    let i = 1;
+    let isAdr = true;
+    while (isAdr) {
+        if (i == n) { // this address is selected
+            document.getElementById("adr" + i).style.backgroundColor = "white";    // select new address
+            document.getElementById("dropdownAdr" + i).style.display = "block"; // show new address
+            // document.getElementById("dropdownAdr" + i).setAttribute("required", "");    // make new address required
+            document.getElementById("numVoie" + i).style.display = "block";
+            // document.getElementById("numVoie" + i).setAttribute("required", "");
+            document.getElementById("voie" + i).style.display = "block";
+            // document.getElementById("voie" + i).setAttribute("required", "");
+            document.getElementById("ville" + i).style.display = "block";
+            // document.getElementById("ville" + i).setAttribute("required", "");
+            document.getElementById("zip" + i).style.display = "block";
+            // document.getElementById("zip" + i).setAttribute("required", "");
+            document.getElementById("pays" + i).style.display = "block";
+            // document.getElementById("pays" + i).setAttribute("required", "");
+        }
+        else {
+            if (document.getElementById("adr" + i) != null) { // this address exists
+                document.getElementById("adr" + i).style.backgroundColor = "#B4B4B4";    // unselect previous address
+                // document.getElementById("dropdownAdr" + i).removeAttribute("required");   // make previous address not required in order to redisplay it after
+                document.getElementById("dropdownAdr" + i).style.display = "none"; // hide previous address
 
-    // remember to save info before changing address
-    // clean address inputs
-    document.getElementById("dropdownAdr").selectedIndex = "0";
-    document.getElementById("numVoie").value = "";
-    document.getElementById("voie").value = "";
-    document.getElementById("ville").value = "";
-    document.getElementById("zip").value = "";
-    document.getElementById("pays").value = "";
+                // document.getElementById("numVoie" + i).removeAttribute("required");
+                document.getElementById("numVoie" + i).style.display = "none";
+
+                // document.getElementById("voie" + i).removeAttribute("required");
+                document.getElementById("voie" + i).style.display = "none";
+
+                // document.getElementById("ville" + i).removeAttribute("required");
+                document.getElementById("ville" + i).style.display = "none";
+
+                // document.getElementById("zip" + i).removeAttribute("required");
+                document.getElementById("zip" + i).style.display = "none";
+
+                // document.getElementById("pays" + i).removeAttribute("required");
+                document.getElementById("pays" + i).style.display = "none";
+            }
+            else { // this address doesn't exist
+                isAdr = false;
+            }
+        }
+        i++;
+    }
 }
 
 

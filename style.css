@@ -218,6 +218,7 @@ input::-webkit-inner-spin-button {
     font-size: 18px;
     padding-left: 3px;
     margin-left: 10px;
+    display: block;
 }
 
 .secondItem {
