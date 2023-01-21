@@ -1,41 +1,44 @@
+<script type="module" src="./Scripts/addClient.js" defer></script>
+<script type="module" src="./Scripts/viewClient.js" defer></script>
+
 <div id="searchBoxClient" class="box searchBox">
     <p id="searchTitle" class="titleSection">
-    <img src="Icons/search.svg" alt="search icon" class="icon">
-    Rechercher un client
+        <img src="Icons/search.svg" alt="search icon" class="icon">
+        Rechercher un client
     </p>
     <form action="./index.php" method="post" class="formSearch">
-    <input type="text" name="searchClient" id="searchBar" placeholder="Rechercher">
-    <input type="submit" value="Rechercher" id="searchButton" style="display: none">
+        <input type="text" name="searchClient" id="searchBar" placeholder="Rechercher">
+        <input type="submit" value="Rechercher" id="searchButton" style="display: none">
     </form>
 </div>
 
 <div id="listBoxClient" class="box listBox">
     <div class="listTitleDiv">
-    <p id="listTitle" class="titleSection">
-        <img src="Icons/list.svg" alt="list icon" class="icon">
-        Liste des clients
-    </p>
-    <p id="addTitle" class="titleSection clickableTitle" onclick="addClient()">
-        <img src="Icons/add.svg" alt="add icon" class="icon">
-        Ajouter un client
-    </p>
+        <p id="listTitle" class="titleSection">
+            <img src="Icons/list.svg" alt="list icon" class="icon">
+            Liste des clients
+        </p>
+        <p id="addTitleClient" class="titleSection clickableTitle">
+            <img src="Icons/add.svg" alt="add icon" class="icon">
+            Ajouter un client
+        </p>
     </div>
 
     <!-- Get client info -->
     <?php
-    if (isset($_POST['searchClient'])) {
-        $search = $_POST['searchClient']; // Get the search value with POST method
-        $sql = "SELECT * FROM client WHERE id_client LIKE '%$search%' OR nom_client LIKE '%$search%' OR prenom_client LIKE '%$search%' ORDER BY id_client DESC"; // Search in the database
-        $infos = $conn->query($sql);
-        if ($infos->num_rows == 0) { // If there is no result
-            echo "0 results";
+        if (isset($_POST['searchClient'])) {
+            $search = $_POST['searchClient']; // Get the search value with POST method
+            $sql = "SELECT * FROM client WHERE id_client LIKE '%$search%' OR nom_client LIKE '%$search%' OR prenom_client LIKE '%$search%' ORDER BY id_client DESC"; // Search in the database
+            $infos = $conn->query($sql);
+            if ($infos->num_rows == 0) { // If there is no result
+                echo "0 results";
+            }
         }
-    }
-    else {
-        $sql = "SELECT DISTINCT * FROM client ORDER BY id_client DESC"; 
-        $infos = $conn->query($sql);
-    }
-    $i = 0;
+        else {
+            $sql = "SELECT DISTINCT * FROM client ORDER BY id_client DESC"; 
+            $infos = $conn->query($sql);
+        }
+        $i = 0;
     ?>
     <table class="listClient">
     <thead>
@@ -79,7 +82,7 @@
             $som_point = $conn->query($sql);
             $nb_point = $som_point->fetch_assoc()["SUM(nb_points)"];
             if (empty($nb_point)) { // If clients has no points
-            $nb_point = 0;
+                $nb_point = 0;
             }
 
             echo "<tr>";
@@ -135,5 +138,4 @@
 <?php
     include './addClient.php';
     include './viewClient.php';
-    include './addOrder.php';
 ?>

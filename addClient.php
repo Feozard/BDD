@@ -25,7 +25,7 @@
                 <p class="subtitle">ID</p>
                 <!-- ID creation -->
                 <script type="text/javascript">
-                    document.getElementById("addTitle").addEventListener("click", generateID); 
+                    document.getElementById("addTitleClient").addEventListener("click", generateID); 
                     function generateID() {
                         var ID = "";
                         ID = ID.concat(new Date().getFullYear().toString().substr(2, 3)); // Add year

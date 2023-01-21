@@ -1,25 +1,20 @@
 
 var nbPaiement = 1;  // number of payment inputs
 
-// function addOrder() {
-//     console.log("add order");
-//     document.getElementById("overlayAddOrder").style.display = "flex";
-//     document.getElementById("overlayAddOrder").style.flexDirection = "row";
-// }
+document.getElementById("addTitleOrder").addEventListener("click", addOrder);    // open overlay
+document.getElementById("closeButtonOrder").addEventListener("click", closeOverlay);    // close overlay
 
-// document.getElementById("closeButtonOrder").addEventListener("click", closeOverlayOrder);    // close overlay
+function addOrder() {  // open overlay
+    document.getElementById("overlayAddOrder").style.display = "flex";
+    document.getElementById("overlayAddOrder").style.flexDirection = "row";
+}
 
-// function closeOverlayOrder() {
-//     console.log("close overlay");
-//     nbPaiement = 1; // reset numbers of paiement inputs
-//     document.getElementById("overlayAddOrder").style.display = "none";
-// }
+function closeOverlay() { // close overlay
+    nbPaiement = 1; // reset numbers of paiement inputs
+    document.getElementById("overlayAddOrder").style.display = "none";
+}
 
-// function exportList() {
-//     console.log("export list");
-// }
-
-// // paiement management
+// paiement management
 // document.getElementById("paiement1").style.backgroundColor = "white";    // set first paiement as selected
 // var currentPaiement = 1;
 // document.getElementById("paiement1").addEventListener("click", () => {

@@ -1,11 +1,14 @@
+<script type="module" src="./Scripts/viewClient.js" defer></script>
+<script type="module" src="./Scripts/addOrder.js" defer></script>
+
 <div id="searchBoxOrder" class="box searchBox">
     <p id="searchTitle" class="titleSection">
         <img src="Icons/search.svg" alt="search icon" class="icon">
         Rechercher une commande
     </p>
-    <form action="./index.php" method="post" class="formSearch">
-    <input type="text" name="searchClient" id="searchBar" placeholder="Rechercher">
-    <input type="submit" value="Rechercher" id="searchButton" style="display: none">
+    <form action="./index.php?tab=Order" method="post" class="formSearch">
+        <input type="text" name="searchOrder" id="searchBar" placeholder="Rechercher">
+        <input type="submit" value="Rechercher" id="searchButton" style="display: none">
     </form>
 </div>
 
@@ -15,11 +18,11 @@
             <img src="Icons/list.svg" alt="list icon" class="icon">
             Liste des commandes
         </p>
-        <p id="addTitle" class="titleSection clickableTitle" onclick="addOrder()">
+        <p id="addTitleOrder" class="titleSection clickableTitle">
             <img src="Icons/add.svg" alt="add icon" class="icon">
             Ajouter une commande
         </p>
-        <p id="exportTitle" class="titleSection clickableTitle" onclick="exportOrder()">
+        <p id="exportTitle" class="titleSection clickableTitle">
             <img src="Icons/export.svg" alt="export icon" class="icon">
             Exporter les commandes
         </p>
@@ -27,16 +30,16 @@
 
     <!-- Get order info -->
     <?php
-    if (isset($_POST['searchOrder'])) {
-        $search = $_POST['searchOrder']; // Get the search value with POST method
-        $sql = "SELECT * FROM client WHERE id_client LIKE '%$search%' OR nom_client LIKE '%$search%' OR prenom_client LIKE '%$search%' ORDER BY id_client DESC"; // Search in the database
+    if (isset($_POST['searchOrder'])) { ?>
+        <?php $search = $_POST['searchOrder']; // Get the search value with POST method
+        $sql = "SELECT * FROM commande WHERE id_commande LIKE '%$search%' OR id_client LIKE '%$search%' ORDER BY date_commande DESC"; // Search in the database
         $infos = $conn->query($sql);
         if ($infos->num_rows == 0) { // If there is no result
             echo "0 results";
         }
     }
     else {
-        $sql = "SELECT DISTINCT * FROM commande ORDER BY id_commande DESC"; 
+        $sql = "SELECT DISTINCT * FROM commande ORDER BY date_commande DESC"; 
         $infos = $conn->query($sql);
     }
     $i = 0;
@@ -45,7 +48,7 @@
     <thead>
         <tr>
         <th class="elementThead">ID</th>
-        <th class="elementThead">Id Client</th>
+        <th class="elementThead">ID Client</th>
         <th class="elementThead">Date</th>
         <th class="elementThead">Adresse(s)</th>
         <th class="elementThead">Téléphone(s)</th>
@@ -58,7 +61,7 @@
         <?php
         while($info = $infos->fetch_assoc()) {
             $i++;
-            $sql = "SELECT * FROM adresse WHERE id_client = '".$info["id_client"]."'"; // Get addresses
+            $sql = "SELECT * FROM adresse WHERE type_adresse = 'Livraison' AND id_client = '".$info["id_client"]."'"; // Get addresses
             $adresses = $conn->query($sql);
             $arrayAdr = [];
             while($adr = $adresses->fetch_assoc()) {  // Table of addresses
@@ -79,6 +82,13 @@
 
             $sql = "SELECT * FROM points WHERE id_client = '".$info["id_client"]."'"; // Get points
             $points = $conn->query($sql)->fetch_assoc();
+
+            $sql = "SELECT SUM(nb_points) FROM points WHERE id_client = '".$info["id_client"]."'"; // Get sum of points
+            $som_point = $conn->query($sql);
+            $nb_point = $som_point->fetch_assoc()["SUM(nb_points)"];
+            if (empty($nb_point)) { // If clients has no points
+                $nb_point = 0;
+            }
 
             echo "<tr>";
             echo "<td class='elementTbody' id='click_id_order".$i."'>".$info["id_commande"]."</td>";
@@ -107,11 +117,16 @@
             echo "<td class='elementTbody'>".$info["date_commande"]."</td>";
 
             // Addresses
-            $adressesStr = '';
-            while($adresse = $adresses->fetch_assoc()) {  // List of addresses
-            $adressesStr .= $adresse["num_voie"].", ".$adresse["voie"]." - ".$adresse["code_postal"]." ".$adresse["ville"]." - ".$adresse["pays"]."<br>";
+            $sql = "SELECT * FROM adresse WHERE type_adresse = 'Livraison' AND id_client = '".$info["id_client"]."'";
+            $addresse = $conn->query($sql);
+            if ($addresse->num_rows == 0) { // If there is no address
+                echo "<td class='elementTbody'>Aucune adresse de livraison</td>";
             }
-            echo "<td class='elementTbody'>".$adressesStr."</td>"; // Display list of addresses
+            else {
+                $adr = $addresse->fetch_assoc();
+                $adresseStr = $adr["num_voie"].", ".$adr["voie"]." - ".$adr["code_postal"]." ".$adr["ville"]." - ".$adr["pays"];
+                echo "<td class='elementTbody'>".$adresseStr."</td>"; // Display addresse
+            }
 
             // Phones
             $numsStr = '';
@@ -132,7 +147,6 @@
 </div>
 
 <?php
-    // include './addClient.php';
-    // include './viewClient.php';
-    // include './addOrder.php';
+    include './addOrder.php';
+    include './viewClient.php';
 ?>

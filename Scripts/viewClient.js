@@ -116,7 +116,6 @@ function selectAdr(i, adresses) { // select an address
 
 function closeOverlay() {
     document.getElementById("overlayViewClient").style.display = "none";
-    console.log("close");
     document.getElementById("closeButtonViewClient").removeEventListener("click", closeOverlay);   // remove previous event
     clearOverlay();
 }

@@ -7,7 +7,6 @@
     <title>BDD</title>
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="./Scripts/index.js" defer></script>
-    <script type="module" src="./Scripts/viewClient.js" defer></script>
     <script type="module" src="./Scripts/viewOrder.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,9 +28,34 @@
       <div class="submenu" id="clients"><span class="title">Clients</span></div>
       <div class="submenu" id="orders"><span class="title">Commandes</span></div>
     </div>
+    <script type="text/javascript">
+      document.getElementById("clients").addEventListener("click", function() {
+        window.location.href = "index.php?tab=Client";
+      });
+      document.getElementById("orders").addEventListener("click", function() {
+        window.location.href = "index.php?tab=Order";
+      });
+    </script>
+
     <?php
-      include './client.php';
-      include './order.php';
+      if (isset($_GET["tab"])) {
+        $tab = $_GET["tab"];
+        if (strcmp($tab, "Client") == 0) {  // client tab selected
+          echo "<script>document.getElementById('clients').style.borderBottom = '4px solid #22333B';</script>";
+          echo "<script>document.getElementById('orders').style.borderBottom = '4px solid transparent';</script>";
+          include './client.php';
+        }
+        else if (strcmp($tab, "Order") == 0) { // order tab selected
+          echo "<script>document.getElementById('orders').style.borderBottom = '4px solid #22333B';</script>";
+          echo "<script>document.getElementById('clients').style.borderBottom = '4px solid transparent';</script>";
+          include './order.php';
+        }
+      }
+      else { // default value = client tab
+        echo "<script>document.getElementById('clients').style.borderBottom = '4px solid #22333B';</script>";
+        echo "<script>document.getElementById('orders').style.borderBottom = '4px solid transparent';</script>";
+        include './client.php';
+      }
     ?>
   </body>
 </html>
