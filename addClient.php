@@ -29,7 +29,7 @@
                     function generateID() {
                         var ID = "";
                         ID = ID.concat(new Date().getFullYear().toString().substr(2, 3)); // Add year
-                        ID = ID.concat("-");
+                        ID = ID.concat("-CLI-");
 
                         // Get last ID used
                         <?php
@@ -38,7 +38,7 @@
                             $lastID = $lastID->fetch_assoc();
                         ?>
                         var lastID = "<?php echo $lastID['id_client']; ?>";
-                        lastID = lastID.substr(3, lastID.length-1);
+                        lastID = lastID.substr(7, lastID.length-1);
                         lastID = parseInt(lastID);
                         endNewID = lastID + 1;
                         endNewID = endNewID.toString();

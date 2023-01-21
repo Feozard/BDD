@@ -25,7 +25,7 @@
         }
     }
 
-    // addresses
+    // addresses (fonctionne pas, jspa pourquoi)
     $typeAdr = [];
     $numVoie = [];
     $voie = [];

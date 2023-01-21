@@ -1,13 +1,13 @@
-currentAdr = 1; // current address selected
+var currentAdr = 1; // current address selected
 
 function viewClient(info, telephone, adresses, points, sum_points) {
     isClosed = false;
     document.getElementById("overlayViewClient").style.display = "flex";
     document.getElementById("overlayViewClient").style.flexDirection = "row"; // open overlay
 
+    document.getElementById("id_clientView").value = info.id_client;
     document.getElementById("lastNameView").value = info.nom_client; // set value of input
     document.getElementById("firstNameView").value = info.prenom_client;
-    document.getElementById("id_clientView").value = info.id_client;
     document.getElementById("mailView").value = info.mail;
     document.getElementById("facebookView").value = info.fb;
     document.getElementById("instagramView").value = info.insta;

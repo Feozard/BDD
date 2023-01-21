@@ -45,7 +45,7 @@
     padding: 8px;
 }
 
-#searchBox {
+.searchBox {
     background-color: #FBFBFB;
     margin-top: 70px;
     margin-left: 5%;
@@ -90,7 +90,7 @@
     background: url("Icons/search.svg") top right    no-repeat;
 }
 
-#listBox {
+.listBox {
     background-color: #FBFBFB;
     margin-top: 40px;
     margin-left: 5%;
@@ -103,15 +103,10 @@
     background-color: transparent;
     display: flex;
     flex-direction: row;
+    gap: 10%;
 }
 
-#addTitle {
-    margin-left: 15%;
-    cursor: pointer;
-}
-
-#exportBtn {
-    margin-left: 15%;
+.clickableTitle {
     cursor: pointer;
 }
 
@@ -396,3 +391,19 @@ input::-webkit-inner-spin-button {
 .code_region {
     width: 60px;
 }
+
+.formSearch {
+    background-color: transparent;
+}
+
+/* #click_id_client {
+    cursor: pointer;
+    color: #058ED9;
+    font-weight: bold;
+}
+
+#click_id_order {
+    cursor: pointer;
+    color: #058ED9;
+    font-weight: bold;
+} */
