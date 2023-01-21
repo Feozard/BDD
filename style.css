@@ -292,6 +292,22 @@ input::-webkit-inner-spin-button {
     border: none;
     background-color: transparent;
     float: right;
+    order: 2;
+}
+
+.editButton {
+    background-image: url(Icons/edit.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    margin-top: 8px;
+    border: none;
+    background-color: transparent;
+    float: right;
+    order: 1;
 }
 
 .validateButton {
@@ -312,6 +328,17 @@ input::-webkit-inner-spin-button {
 #overlayAddOrder {
     position: absolute;
     width: 400px;
+    z-index: 2; 
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    background-color: transparent;
+    display: none;
+}
+
+#overlayViewOrder {
+    position: absolute;
+    width: 600px;
     z-index: 2; 
     top: 50%;
     left: 50%;

@@ -93,6 +93,21 @@
             echo "<tr>";
             echo "<td class='elementTbody' id='click_id_order".$i."'>".$info["id_commande"]."</td>";
             echo "<td class='elementTbody' id='click_id_client2".$i."'>".$info["id_client"]."</td>";
+
+            $sql = "SELECT * FROM adresse WHERE type_adresse = 'Livraison' AND id_client = '".$info["id_client"]."' LIMIT 1";
+            $addresse = $conn->query($sql);
+
+            $sql ="SELECT * FROM mode_paiement";
+            $mode_paiement = $conn->query($sql);
+
+            $sql = "SELECT * FROM paiement WHERE id_commande = '".$info["id_commande"]."'";
+            $paiements = $conn->query($sql);
+
+            $sql = "SELECT * FROM commande_produit WHERE id_commande = '".$info["id_commande"]."'";
+            $productsInOrder = $conn->query($sql);
+
+            $sql = "SELECT * FROM produit";
+            $products = $conn->query($sql);
             ?>
 
             <script src="./Scripts/viewOrder.js"></script>
@@ -100,7 +115,6 @@
             <script type="text/javascript">
                 document.getElementById("click_id_order" + <?php echo $i; ?>).style.cursor = 'pointer';
                 document.getElementById("click_id_client2" + <?php echo $i; ?>).style.cursor = 'pointer';
-
 
                 document.getElementById("click_id_client2" + <?php echo $i; ?>).addEventListener("click", () => {
                     viewClient(<?php echo json_encode($client); ?>,
@@ -110,15 +124,22 @@
                     <?php echo $nb_point; ?>)
                 });
 
-                // set call function for view order
+                document.getElementById("click_id_order" + <?php echo $i; ?>).addEventListener("click", () => {
+                    viewOrder(<?php echo json_encode($info); ?>,
+                    <?php echo json_encode($addresse); ?>,
+                    <?php echo json_encode($client); ?>,
+                    <?php echo json_encode($productsInOrder); ?>,
+                    <?php echo json_encode($products); ?>,
+                    <?php echo json_encode($paiements); ?>,
+                    <?php echo json_encode($mode_paiement); ?>
+                    )
+                });
             </script>
 
         <?php
             echo "<td class='elementTbody'>".$info["date_commande"]."</td>";
 
             // Addresses
-            $sql = "SELECT * FROM adresse WHERE type_adresse = 'Livraison' AND id_client = '".$info["id_client"]."'";
-            $addresse = $conn->query($sql);
             if ($addresse->num_rows == 0) { // If there is no address
                 echo "<td class='elementTbody'>Aucune adresse de livraison</td>";
             }
@@ -149,4 +170,5 @@
 <?php
     include './addOrder.php';
     include './viewClient.php';
+    include './viewOrder.php';
 ?>

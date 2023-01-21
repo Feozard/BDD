@@ -1,19 +1,22 @@
 var currentAdr = 1; // current address selected
 
-function viewClient(info, telephone, adresses, points, sum_points) {
-    document.getElementById("overlayViewClient").style.display = "flex";
-    document.getElementById("overlayViewClient").style.flexDirection = "row"; // open overlay
+function editClient(info, telephone, adresses, points, sum_points) {
+    isClosed = false;
+    document.getElementById("overlayEditClient").style.display = "flex";
+    document.getElementById("overlayEditClient").style.flexDirection = "row"; // open overlay
 
-    document.getElementById("id_clientView").value = info.id_client;
-    document.getElementById("lastNameView").value = info.nom_client; // set value of input
-    document.getElementById("firstNameView").value = info.prenom_client;
-    document.getElementById("mailView").value = info.mail;
-    document.getElementById("facebookView").value = info.fb;
-    document.getElementById("instagramView").value = info.insta;
-    document.getElementById("levelView").value = info.membership;
-    document.getElementById("nbPointsView").value = sum_points;
+    document.getElementById("id_client").value = info.id_client;
+    document.getElementById("lastName").value = info.nom_client; // set value of input
+    document.getElementById("firstName").value = info.prenom_client;
+    document.getElementById("mail").value = info.mail;
+    document.getElementById("facebook").value = info.fb;
+    document.getElementById("instagram").value = info.insta;
+    document.getElementById("level").value = info.membership;
+    document.getElementById("nbPoints").value = sum_points;
 
     // phones
+    document.getElementById("addTel").addEventListener("click", addTel);    // add a new tel input
+
     var nbTel = telephone.length;
     if (nbTel > 1) {
         document.getElementById("telNumView0").innerHTML = "Tél. 1";    // change tel label for multiple tels
