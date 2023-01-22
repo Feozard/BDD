@@ -96,6 +96,8 @@
 
             $sql = "SELECT * FROM adresse WHERE type_adresse = 'Livraison' AND id_client = '".$info["id_client"]."' LIMIT 1";
             $addresse = $conn->query($sql);
+            $adr = $addresse->fetch_assoc();
+            $addresse = $conn->query($sql); // To do another fetch_assoc later
 
             $sql ="SELECT * FROM mode_paiement";
             $mode_paiement = $conn->query($sql);
@@ -126,7 +128,7 @@
 
                 document.getElementById("click_id_order" + <?php echo $i; ?>).addEventListener("click", () => {
                     viewOrder(<?php echo json_encode($info); ?>,
-                    <?php echo json_encode($addresse); ?>,
+                    <?php echo json_encode($adr); ?>,
                     <?php echo json_encode($client); ?>,
                     <?php echo json_encode($productsInOrder); ?>,
                     <?php echo json_encode($products); ?>,

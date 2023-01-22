@@ -1,6 +1,6 @@
 <!-- Overlay Add Order -->
 <div id="overlayAddOrder">
-    <form id="formAddClient" method="post" name="createClient" action="addedOrder.php">
+    <form id="formAddOrder" method="post" name="createOrder" action="addedOrder.php">
         <div class="formOrder">
             <button class="closeButton" id="closeButtonOrder" type="button"></button>
 
@@ -107,14 +107,14 @@
                 </div>
             </div> -->
 
-            <br />
+            <!-- <br />
             <p class="subtitle">Articles</p>
             <div class="onglets">
                 <button id="addProduct" class="ongletProduct onglet addOnglet" type="button"></button>
             </div>
             <div class="formBox box">
                 Ajouter des articles...
-            </div>
+            </div> -->
             <input type="submit" value="Submit" class="validateButton">
         </div>
     </form>

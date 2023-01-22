@@ -138,5 +138,4 @@
 <?php
     include './addClient.php';
     include './viewClient.php';
-    include './editClient.php';
 ?>
