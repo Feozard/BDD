@@ -110,6 +110,7 @@
 
             $sql = "SELECT * FROM produit";
             $products = $conn->query($sql);
+            $products = $products->fetch_all(MYSQLI_ASSOC);
             ?>
 
             <script src="./Scripts/viewOrder.js"></script>

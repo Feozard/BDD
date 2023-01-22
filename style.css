@@ -385,10 +385,6 @@ input::-webkit-inner-spin-button {
     flex-direction: row;
 }
 
-.blockForm {
-
-}
-
 .paiementBox {
     background-color: transparent;
     width: 40%;
@@ -479,4 +475,10 @@ input::-webkit-inner-spin-button {
     background-position: center;
     background-size: 15px 15px;
     cursor: pointer;
+}
+
+#boxProducts {
+    height: 150px;
+    overflow-y: scroll;
+    scrollbar-color: #B4B4B4 #D9D9D9;
 }

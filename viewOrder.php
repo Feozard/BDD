@@ -146,7 +146,7 @@
                 <div class="productsBox">
                     <br />
                     <p class="subtitle">Articles</p>
-                    <div class="formBox box">
+                    <div class="formBox box" id="boxProducts">
                         <div class="blockInfo">
                             <input type="number" class="itemForm n_product" id="n_product1" placeholder="0" min="0" name="n_product1"> 
                             <select id="dropdownProduct1" class="itemForm" name="product1">
