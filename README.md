@@ -11,10 +11,12 @@
 
 * Order
   * ~~__Add order__~~
-  * __Add products to order__
+  * ~~__Add products to order__~~
   * __View order__
   * ~~__Del order__~~
+  * __Paiements managment__
   * __Edit order__ 
   * __Export list order__
   * __Export bill__
   * ~~__Search order__~~
+  * __Clear overlay__

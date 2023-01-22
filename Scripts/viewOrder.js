@@ -24,6 +24,33 @@ function viewOrder(info_order, adr, info_client, products, info_products, paieme
         document.getElementById("adresseOrder").value = "Adresse non renseignée";
     }
     document.getElementById("notesOrder").value = info_order.note;
+
+    if (products.length == 0) {
+        document.getElementById("blockProductView").innerHTML = "Aucun article dans cette commande.";
+    }
+    else {
+        for (let i = 0; i < products.length; i++) {
+            let newD = document.createElement("div");
+            newD.className = "blockInfo";
+
+            let newP = document.createElement("input");
+            newP.type = "text";
+            newP.className = "itemForm";
+            newP.id = "product" + (i+1);
+            newP.readonly = true;
+            let nomProduit = "";
+            for (let j = 0; j < info_products.length; j++) {
+                if (info_products[j].id_produit == products[i].id_produit) {
+                    nomProduit = info_products[j].nom_produit;
+                    break;
+                }
+            }
+            newP.value = products[i].quantite + "x " + nomProduit;
+            newD.appendChild(newP);
+
+            document.getElementById("boxProductsView").appendChild(newD);
+        }
+    }
 }
 
 function editOrder(info_order, adr, info_client, products, info_products, paiements, mode_paiements) {
@@ -73,6 +100,10 @@ function editOrder(info_order, adr, info_client, products, info_products, paieme
 
     
     // display products
+    opt = document.createElement('option');
+    opt.value = "";
+    opt.innerHTML = "Choisir un produit";
+    document.getElementById("dropdownProduct1").appendChild(opt);
     for (let i = 0; i < info_products.length; i++) {
         opt = document.createElement('option');
         opt.value = info_products[i].id_produit;
@@ -114,6 +145,10 @@ function addProduct(info_products) {
 
     document.getElementById("boxProducts").appendChild(newB);
 
+    opt = document.createElement('option');
+    opt.value = "";
+    opt.innerHTML = "Choisir un produit";
+    document.getElementById("dropdownProduct" + nbProduct).appendChild(opt);
     for (let i = 0; i < info_products.length; i++) {
         opt = document.createElement('option');
         opt.value = info_products[i].id_produit;

@@ -107,6 +107,7 @@
 
             $sql = "SELECT * FROM commande_produit WHERE id_commande = '".$info["id_commande"]."'";
             $productsInOrder = $conn->query($sql);
+            $productsInOrder = $productsInOrder->fetch_all(MYSQLI_ASSOC);
 
             $sql = "SELECT * FROM produit";
             $products = $conn->query($sql);

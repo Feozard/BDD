@@ -48,8 +48,11 @@
             <div class="productsBox">
                 <br />
                 <p class="subtitle">Articles</p>
-                <div class="formBox box" style="height:80%">
-            
+                <div class="formBox box" id="boxProductsView">
+                    <div class="blockInfo" id="blockProductView">
+                        <!-- <input type="number" class="itemForm n_product" id="n_productView1" readonly> 
+                        <input type="text" class="itemForm" id="product1" readonly> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,17 +100,17 @@
             <div class="formBox box">
                 <div class="blockInfo">
                     <p class="subtitle">ID</p>
-                    <input id="id_orderEdit" class="itemForm" type="text" readonly>
+                    <input id="id_orderEdit" class="itemForm" type="text" name="id_order" readonly>
                     <p class="subtitle secondItem">Date</p>
                     <input id="dateEdit" class="itemForm" type="text" readonly>
                     <p class="subtitle secondItem">Statut</p>
-                    <select id="dropdownStatus" class="itemForm" name="statut">
-                        <option value="à payer">À payer</option>
-                        <option value="payée">Payé</option>
-                        <option value="empaqueté">Prêt</option>
-                        <option value="envoyée">Expédié</option>
-                        <option value="livrée">Livré</option>
-                        <option value="terminée">Terminé</option>
+                    <select id="dropdownStatus" class="itemForm" name="status">
+                        <option value="À payer">À payer</option>
+                        <option value="Payé">Payé</option>
+                        <option value="Empaqueté">Prêt</option>
+                        <option value="Envoyé">Expédié</option>
+                        <option value="Livré">Livré</option>
+                        <option value="Terminé">Terminé</option>
                     </select>
                 </div>
 
@@ -165,11 +168,11 @@
                     <div class="formBox box">
                         <div class="blockInfo">
                             <p class="subtitle">Adresse</p>
-                            <input id="adresseOrder" class="itemForm" type="textbox" readonly>
+                            <input id="adresseOrder" class="itemForm" type="textbox">
                         </div>
                         <div class="blockInfo">
                             <p class="subtitle">Notes</p>
-                            <input id="notesOrder" class="itemForm" type="textbox" readonly>
+                            <input id="notesOrder" class="itemForm" type="textbox" name="notes">
                         </div>
                     </div>
                 </div>
