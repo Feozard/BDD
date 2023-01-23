@@ -32,7 +32,7 @@
         }
     }
 
-    $sql = "SELECT SUM(produit.prix_produit * commande_produit.quantite) FROM produit, commande_produit WHERE produit.id_produit = commande_produit.id_produit AND commande_produit.id_commande = '$id'"; // Get total amount
+    $sql = "SELECT DISTINCT SUM(produit.prix_produit * commande_produit.quantite) FROM produit, commande_produit WHERE produit.id_produit = commande_produit.id_produit AND commande_produit.id_commande = '$id'"; // Get total amount
     $somme = $conn->query($sql);
     $somme = $somme->fetch_assoc()["SUM(produit.prix_produit * commande_produit.quantite)"];
     $sql = "UPDATE commande SET prix_commande = '$somme' WHERE id_commande = '$id'";

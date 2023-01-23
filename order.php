@@ -25,7 +25,7 @@
         <p id="exportTitle" class="titleSection clickableTitle">
             <img src="Icons/export.svg" alt="export icon" class="icon">
             Exporter les commandes
-        </p>
+        </p>   
     </div>
 
     <!-- Get order info -->
@@ -105,7 +105,7 @@
             $sql = "SELECT * FROM paiement WHERE id_commande = '".$info["id_commande"]."'";
             $paiements = $conn->query($sql);
 
-            $sql = "SELECT * FROM commande_produit WHERE id_commande = '".$info["id_commande"]."'";
+            $sql = "SELECT DISTINCT * FROM commande_produit WHERE id_commande = '".$info["id_commande"]."'";
             $productsInOrder = $conn->query($sql);
             $productsInOrder = $productsInOrder->fetch_all(MYSQLI_ASSOC);
 

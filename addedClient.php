@@ -71,8 +71,6 @@
         }
     }
 
-
-
     // insert into addresses
     for ($i = 0; $i < count($typeAdr); $i++) {
         echo $i;

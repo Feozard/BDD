@@ -3,20 +3,20 @@
 
 # TO-DO
 * Client
-  * __Add multiples addresses when creating a new client__
+  * ~~Add multiples addresses when creating a new client~~
   * __Edit client__
   * __Points info__
   * Del button for addresses and phones
   * Go back to list of all clients after a search
 
 * Order
-  * ~~__Add order__~~
-  * ~~__Add products to order__~~
-  * __View order__
-  * ~~__Del order__~~
+  * ~~Add order~~
+  * ~~Add products to order~~
+  * ~~View order~~
+  * ~~Del order~~
+  * ~~Edit order~~
   * __Paiements managment__
-  * __Edit order__ 
   * __Export list order__
   * __Export bill__
-  * ~~__Search order__~~
-  * __Clear overlay__
+  * ~~Search order~~
+  * ~~Clear overlay~~

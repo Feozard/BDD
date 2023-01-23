@@ -168,22 +168,22 @@ function selectAdr(n) {
             if (document.getElementById("adr" + i) != null) { // this address exists
                 document.getElementById("adr" + i).style.backgroundColor = "#B4B4B4";    // unselect previous address
                 // document.getElementById("dropdownAdr" + i).removeAttribute("required");   // make previous address not required in order to redisplay it after
-                document.getElementById("dropdownAdr" + i).style.display = "none"; // hide previous address
+                document.getElementById("dropdownAdr" + i).type = "hidden"; // hide previous address
 
                 // document.getElementById("numVoie" + i).removeAttribute("required");
-                document.getElementById("numVoie" + i).style.display = "none";
+                document.getElementById("numVoie" + i).type = "hidden";
 
                 // document.getElementById("voie" + i).removeAttribute("required");
-                document.getElementById("voie" + i).style.display = "none";
+                document.getElementById("voie" + i).type = "hidden";
 
                 // document.getElementById("ville" + i).removeAttribute("required");
-                document.getElementById("ville" + i).style.display = "none";
+                document.getElementById("ville" + i).type = "hidden";
 
                 // document.getElementById("zip" + i).removeAttribute("required");
-                document.getElementById("zip" + i).style.display = "none";
+                document.getElementById("zip" + i).type = "hidden";
 
                 // document.getElementById("pays" + i).removeAttribute("required");
-                document.getElementById("pays" + i).style.display = "none";
+                document.getElementById("pays" + i).type = "hidden";
             }
             else { // this address doesn't exist
                 isAdr = false;

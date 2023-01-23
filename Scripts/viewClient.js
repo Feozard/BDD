@@ -119,7 +119,7 @@ function closeOverlay() {
     clearOverlay();
 }
 
-function clearOverlay(nbTel, nbAdr) {  // clear all the added elements (phones, addresses, etc...)
+function clearOverlay() {  // clear all the added elements (phones, addresses, etc...)
     let i = 1;
     let isTel = true;
     while (isTel) {

@@ -1,6 +1,6 @@
 <!-- Overlay View Order -->
 <div id="overlayViewOrder">
-    <div class="formOrder">
+    <div class="formOrder" id="formOrder">
         <button class="closeButton" id="closeButtonViewOrder" type="button"></button>
         <p class="subtitle">Informations</p>
         <div class="formBox box">
@@ -49,10 +49,7 @@
                 <br />
                 <p class="subtitle">Articles</p>
                 <div class="formBox box" id="boxProductsView">
-                    <div class="blockInfo" id="blockProductView">
-                        <!-- <input type="number" class="itemForm n_product" id="n_productView1" readonly> 
-                        <input type="text" class="itemForm" id="product1" readonly> -->
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -64,18 +61,27 @@
                 <div class="formBox box">
                     <div class="blockInfo">
                         <p class="subtitle">Adresse</p>
-                        <input id="adresseOrder" class="itemForm" type="textbox" readonly>
+                        <input id="adresseOrderView" class="itemForm" type="textbox" readonly>
                     </div>
                     <div class="blockInfo">
                         <p class="subtitle">Notes</p>
-                        <input id="notesOrder" class="itemForm" type="textbox" readonly>
+                        <input id="notesOrderView" class="itemForm" type="textbox" readonly>
                     </div>
                 </div>
             </div>
 
             <div class="totalBox">
                 <br />
-                
+                <div class="formBox box total">
+                    <div class="blockInfo">
+                        <p class="subtitle">Total</p>
+                        <input id="totalOrderView" class="itemForm tot" type="text" readonly>
+                    </div>
+                    <div class="blockInfo">
+                        <p class="subtitle">Restant</p>
+                        <input id="resteOrderView" class="itemForm tot" type="text" readonly>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -87,7 +93,6 @@
                 }
             };
         </script>
-        <button class="editButton" id="editButtonOrder" type="button"></button>
     </div>
 </div>
 
@@ -173,6 +178,20 @@
                         <div class="blockInfo">
                             <p class="subtitle">Notes</p>
                             <input id="notesOrder" class="itemForm" type="textbox" name="notes">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="totalBox">
+                    <br />
+                    <div class="formBox box total">
+                        <div class="blockInfo">
+                            <p class="subtitle">Total</p>
+                            <input id="totalOrder" class="itemForm tot" type="text" readonly>
+                        </div>
+                        <div class="blockInfo">
+                            <p class="subtitle">Restant</p>
+                            <input id="resteOrder" class="itemForm tot" type="text" readonly>
                         </div>
                     </div>
                 </div>
