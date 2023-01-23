@@ -101,9 +101,11 @@
 
             $sql ="SELECT * FROM mode_paiement";
             $mode_paiement = $conn->query($sql);
+            $mode_paiement = $mode_paiement->fetch_all(MYSQLI_ASSOC);
 
             $sql = "SELECT * FROM paiement WHERE id_commande = '".$info["id_commande"]."'";
             $paiements = $conn->query($sql);
+            $paiements = $paiements->fetch_all(MYSQLI_ASSOC);
 
             $sql = "SELECT DISTINCT * FROM commande_produit WHERE id_commande = '".$info["id_commande"]."'";
             $productsInOrder = $conn->query($sql);
@@ -115,18 +117,8 @@
             ?>
 
             <script src="./Scripts/viewOrder.js"></script>
-            <script src="./Scripts/viewClient.js"></script>
             <script type="text/javascript">
                 document.getElementById("click_id_order" + <?php echo $i; ?>).style.cursor = 'pointer';
-                document.getElementById("click_id_client2" + <?php echo $i; ?>).style.cursor = 'pointer';
-
-                document.getElementById("click_id_client2" + <?php echo $i; ?>).addEventListener("click", () => {
-                    viewClient(<?php echo json_encode($client); ?>,
-                    <?php echo json_encode($arrayNum); ?>,
-                    <?php echo json_encode($arrayAdr); ?>,
-                    <?php echo json_encode($points); ?>,
-                    <?php echo $nb_point; ?>)
-                });
 
                 document.getElementById("click_id_order" + <?php echo $i; ?>).addEventListener("click", () => {
                     viewOrder(<?php echo json_encode($info); ?>,
@@ -173,6 +165,5 @@
 
 <?php
     include './addOrder.php';
-    include './viewClient.php';
     include './viewOrder.php';
 ?>

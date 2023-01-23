@@ -1,3 +1,5 @@
+var currentPaiement = 1; // current paiement selected
+
 function viewOrder(info_order, adr, info_client, products, info_products, paiements, mode_paiements) {
     document.getElementById("overlayViewOrder").style.display = "flex";
     document.getElementById("overlayViewOrder").style.flexDirection = "row"; // open overlay
@@ -61,6 +63,27 @@ function viewOrder(info_order, adr, info_client, products, info_products, paieme
         info_order, adr, info_client, products, info_products, paiements, mode_paiements
     )});
     document.getElementById("formOrder").appendChild(editBtn);
+
+    // paiements
+    if (paiements.length == 0) {
+        document.getElementById("paiementView1").style.backgroundColor = "white";
+    }
+    else if (paiements.length > 1) {
+        document.getElementById("paiementView1").addEventListener("click", () => {
+            selectPaiementView(1, paiements, mode_paiements);
+        });
+    }
+
+
+    for (let i = 0; i < paiements.length; i++) {
+        if (i == 0) {
+            document.getElementById("paiementView1").style.backgroundColor = "white";
+            selectPaiementView(1, paiements, mode_paiements);
+        }
+        else {
+            addPaiementView(i+1, paiements, mode_paiements);
+        }
+    }
 }
 
 function editOrder(info_order, adr, info_client, products, info_products, paiements, mode_paiements) {
@@ -194,6 +217,35 @@ function addProduct(info_products) {
         opt.innerHTML = info_products[i].nom_produit;
         document.getElementById("dropdownProduct" + nbProduct).appendChild(opt);
     }
+}
+
+function addPaiementView(n, paiements, mode_paiements) {
+    var onglets = document.getElementById("ongletsPaiementView");
+
+    var newP = document.createElement("button");
+    newP.id = "paiementView" + n;
+    newP.className = "onglet";
+    newP.innerHTML = "P" + n;
+    newP.addEventListener("click", () => {
+        selectPaiementView(n, paiements, mode_paiements);
+    });
+
+    onglets.appendChild(newP);
+}
+
+function selectPaiementView(i, paiements, mode_paiements) {
+    document.getElementById("paiementView" + currentPaiement).style.backgroundColor = "#B4B4B4";    // unselect current paiement
+    currentPaiement = i;
+    document.getElementById("paiementView" + currentPaiement).style.backgroundColor = "white";    // select new paiement
+
+    for (let j = 0; j < mode_paiements.length; j++) {
+        if (mode_paiements[j].id_mode_paiement == paiements[i-1].mode_paiement) {
+            document.getElementById("typePaiementView").value = mode_paiements[j].nom_mode_paiement;
+            break;
+        }
+    }
+    document.getElementById("montantView").value = paiements[i-1].montant_paiement;
+    document.getElementById("datePaiementView").value = paiements[i-1].date_paiement;
 }
 
 function closeOverlayOrder() {

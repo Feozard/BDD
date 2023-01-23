@@ -25,22 +25,21 @@
             <div class="paiementBox">
                 <br />
                 <p class="subtitle">Paiement</p>
-                <div class="onglets" id="ongletsPaiement">
-                    <button class="onglet" id="paiement1" type="button">P1</button>
-                    <button class="onglet addOnglet" id="addPaiement" type="button"></button>
+                <div class="onglets" id="ongletsPaiementView">
+                    <button class="onglet" id="paiementView1" type="button">P1</button>
                 </div>
                 <div class="formBox box">
                     <div class="blockInfo">
                         <p class="subtitle">Type</p>
-                        <input id="typePaiement" class="itemForm" type="text" readonly>
+                        <input id="typePaiementView" class="itemForm" type="text" readonly>
                     </div>
                     <div class="blockInfo">
                         <p class="subtitle">Montant</p>
-                        <input id="montant" class="itemForm" type="number" readonly>
+                        <input id="montantView" class="itemForm" type="number" readonly>
                     </div>
                     <div class="blockInfo">
                         <p class="subtitle">Date</p>
-                        <input id="datePaiement" class="itemForm" type="text" readonly>
+                        <input id="datePaiementView" class="itemForm" type="text" readonly>
                     </div>
                 </div>
             </div>
@@ -72,13 +71,14 @@
 
             <div class="totalBox">
                 <br />
+                <p class="subtitle">Total</p>
                 <div class="formBox box total">
                     <div class="blockInfo">
-                        <p class="subtitle">Total</p>
+                        <p class="subtitle">Montant total</p>
                         <input id="totalOrderView" class="itemForm tot" type="text" readonly>
                     </div>
                     <div class="blockInfo">
-                        <p class="subtitle">Restant</p>
+                        <p class="subtitle">Restant à payer</p>
                         <input id="resteOrderView" class="itemForm tot" type="text" readonly>
                     </div>
                 </div>
@@ -184,13 +184,14 @@
 
                 <div class="totalBox">
                     <br />
+                    <p class="subtitle">Total</p>
                     <div class="formBox box total">
                         <div class="blockInfo">
-                            <p class="subtitle">Total</p>
+                            <p class="subtitle">Montant total</p>
                             <input id="totalOrder" class="itemForm tot" type="text" readonly>
                         </div>
                         <div class="blockInfo">
-                            <p class="subtitle">Restant</p>
+                            <p class="subtitle">Restant à payer</p>
                             <input id="resteOrder" class="itemForm tot" type="text" readonly>
                         </div>
                     </div>

@@ -4,7 +4,7 @@
 # TO-DO
 * Client
   * ~~Add multiples addresses when creating a new client~~
-  * __Edit client__
+  * __Edit client__ <-
   * __Points info__
   * Del button for addresses and phones
   * Go back to list of all clients after a search
@@ -15,7 +15,8 @@
   * ~~View order~~
   * ~~Del order~~
   * ~~Edit order~~
-  * __Paiements managment__
+  * __Rest to pay__ <-
+  * __Paiements managment__ <-
   * __Export list order__
   * __Export bill__
   * ~~Search order~~
