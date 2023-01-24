@@ -42,7 +42,7 @@
     $i = 1;
     $isPaiement = true;
     while ($isPaiement) {
-        if (isset($_POST['typePaiement'.$i]) && $_POST['montant'.$i] != 0) {
+        if (isset($_POST['typePaiement'.$i]) && $_POST['montant'.$i] != "0") {
             $type = $_POST['typePaiement'.$i];
             $montant = $_POST['montant'.$i];
             $date = $_POST['datePaiement'.$i];
