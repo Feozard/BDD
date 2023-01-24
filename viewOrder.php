@@ -60,11 +60,11 @@
                 <div class="formBox box">
                     <div class="blockInfo">
                         <p class="subtitle">Adresse</p>
-                        <input id="adresseOrderView" class="itemForm" type="textbox" readonly>
+                        <input id="adresseOrderView" class="itemForm" type="text" readonly>
                     </div>
                     <div class="blockInfo">
                         <p class="subtitle">Notes</p>
-                        <input id="notesOrderView" class="itemForm" type="textbox" readonly>
+                        <input id="notesOrderView" class="itemForm" type="text" readonly>
                     </div>
                 </div>
             </div>
@@ -136,17 +136,25 @@
                         <button class="onglet addOnglet" id="addPaiement" type="button"></button>
                     </div>
                     <div class="formBox box">
-                        <div class="blockInfo">
+                        <div class="blockInfo" id="typeDiv">
                             <p class="subtitle">Type</p>
-                            <input id="typePaiement" class="itemForm" type="text">
+                            <select id="typePaiement1" class="itemForm" name="typePaiement1">
+                                <?php
+                                    $sql = "SELECT * FROM mode_paiement";
+                                    $result = $conn->query($sql);
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<option value='" . $row['id_mode_paiement'] . "'>" . $row['nom_mode_paiement'] . "</option>";
+                                    }
+                                ?>
+                            </select>
                         </div>
-                        <div class="blockInfo">
+                        <div class="blockInfo" id="montantDiv">
                             <p class="subtitle">Montant</p>
-                            <input id="montant" class="itemForm" type="number">
+                            <input id="montant1" class="itemForm" type="number" name="montant1" placeholder="0" min="0">
                         </div>
-                        <div class="blockInfo">
+                        <div class="blockInfo" id="dateDiv">
                             <p class="subtitle">Date</p>
-                            <input id="datePaiement" class="itemForm" type="text">
+                            <input id="datePaiement1" class="itemForm" type="text" name="datePaiement1">
                         </div>
                     </div>
                 </div>
@@ -173,11 +181,11 @@
                     <div class="formBox box">
                         <div class="blockInfo">
                             <p class="subtitle">Adresse</p>
-                            <input id="adresseOrder" class="itemForm" type="textbox">
+                            <input id="adresseOrder" class="itemForm" type="text">
                         </div>
                         <div class="blockInfo">
                             <p class="subtitle">Notes</p>
-                            <input id="notesOrder" class="itemForm" type="textbox" name="notes">
+                            <input id="notesOrder" class="itemForm" type="text" name="notes">
                         </div>
                     </div>
                 </div>

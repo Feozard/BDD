@@ -1,4 +1,5 @@
 var currentPaiement = 1; // current paiement selected
+var nbPaiement = 1; // number of paiements
 
 function viewOrder(info_order, adr, info_client, products, info_products, paiements, mode_paiements) {
     document.getElementById("overlayViewOrder").style.display = "flex";
@@ -94,10 +95,14 @@ function editOrder(info_order, adr, info_client, products, info_products, paieme
 
     document.getElementById("closeButtonEditOrder").addEventListener("click", closeOverlayEditOrder);    // close overlay
 
+    document.getElementById("addPaiement").addEventListener("click", () => { addPaiement(paiements, mode_paiements) });
+    document.getElementById("paiement1").addEventListener("click", () => { selectPaiement(1, paiements, mode_paiements) });
+    selectPaiement(1, paiements, mode_paiements);
     document.getElementById("addProduct").addEventListener("click", () => { addProduct(info_products) });
 
     document.getElementById("id_orderEdit").value = info_order.id_commande;
     document.getElementById("dateEdit").value = info_order.date_commande;
+    let n = 0;
     switch (info_order.statut_commande) {
         case "À payer" :
             n = 0;
@@ -160,7 +165,6 @@ function editOrder(info_order, adr, info_client, products, info_products, paieme
             document.getElementById("n_product" + (i+1)).value = products[i].quantite;
         }
     }
-
     document.getElementById("totalOrder").value = info_order.prix_commande + " €";
 }
 
@@ -207,12 +211,12 @@ function addProduct(info_products) {
 
     document.getElementById("boxProducts").appendChild(newB);
 
-    opt = document.createElement('option');
-    opt.value = "";
-    opt.innerHTML = "Choisir un produit";
-    document.getElementById("dropdownProduct" + nbProduct).appendChild(opt);
+    var add = document.createElement('option');
+    add.value = "";
+    add.innerHTML = "Choisir un produit";
+    document.getElementById("dropdownProduct" + nbProduct).appendChild(add);
     for (let i = 0; i < info_products.length; i++) {
-        opt = document.createElement('option');
+        var opt = document.createElement('option');
         opt.value = info_products[i].id_produit;
         opt.innerHTML = info_products[i].nom_produit;
         document.getElementById("dropdownProduct" + nbProduct).appendChild(opt);
@@ -232,6 +236,88 @@ function addPaiementView(n, paiements, mode_paiements) {
 
     onglets.appendChild(newP);
 }
+
+function addPaiement(paiements, mode_paiements) {
+    nbPaiement++;
+    document.getElementById("addPaiement").remove(); // remove button add paiement to avoid multiple add buttons
+    var onglets = document.getElementById("ongletsPaiement");
+
+    var newP = document.createElement("button");
+    newP.id = "paiement" + nbPaiement;
+    newP.className = "onglet";
+    newP.innerHTML = "P" + nbPaiement;
+    newP.type = "button";
+    newP.addEventListener("click", () => {
+        selectPaiement(nbPaiement, paiements, mode_paiements);
+    });
+
+    var newAddPaiement = document.createElement("button");
+    newAddPaiement.id = "addPaiement";
+    newAddPaiement.className = "onglet addOnglet";
+    newAddPaiement.type = "button";
+    newAddPaiement.addEventListener("click", () => {
+        addPaiement(paiements, mode_paiements);
+    });
+
+    onglets.appendChild(newP);
+    onglets.appendChild(newAddPaiement);
+
+    var newTypePaiement = document.createElement("select");
+    newTypePaiement.id = "typePaiement" + nbPaiement;
+    newTypePaiement.className = "itemForm";
+    newTypePaiement.name = "typePaiement" + nbPaiement;
+    for (let i = 0; i < mode_paiements.length; i++) {
+        var opt = document.createElement('option');
+        opt.value = mode_paiements[i].id_mode_paiement;
+        opt.innerHTML = mode_paiements[i].nom_mode_paiement;
+        newTypePaiement.appendChild(opt);
+    }
+    document.getElementById("typeDiv").appendChild(newTypePaiement);
+
+    var newMontant = document.createElement("input");
+    newMontant.id = "montant" + nbPaiement;
+    newMontant.className = "itemForm";
+    newMontant.name = "montant" + nbPaiement;
+    newMontant.type = "number";
+    newMontant.placeholder = "0";
+    newMontant.min = "0";
+    document.getElementById("montantDiv").appendChild(newMontant);
+
+    var newDatePaiement = document.createElement("input");
+    newDatePaiement.id = "datePaiement" + nbPaiement;
+    newDatePaiement.className = "itemForm";
+    newDatePaiement.type = "date";
+    newDatePaiement.name = "datePaiement" + nbPaiement;
+    document.getElementById("dateDiv").appendChild(newDatePaiement);
+    selectPaiement(nbPaiement, paiements, mode_paiements);
+}
+
+function selectPaiement(n, paiements, mode_paiements) {
+    console.log("select paiement " + n);
+    let i = 1;
+    let isPaiement = true;
+    while (isPaiement) {
+        if (i == n) {
+            document.getElementById("paiement" + i).style.backgroundColor = "white";   // select new paiement
+            document.getElementById("typePaiement" + i).classList.remove("hiddenPaiement");
+            document.getElementById("montant" + i).type = "";
+            document.getElementById("datePaiement" + i).type = "";
+        }
+        else {
+            if (document.getElementById("paiement" + i) != null) {
+                document.getElementById("paiement" + i).style.backgroundColor = "#B4B4B4";   // unselect current paiement
+                document.getElementById("typePaiement" + i).classList.add("hiddenPaiement")
+                document.getElementById("montant" + i).type = "hidden";
+                document.getElementById("datePaiement" + i).type = "hidden";
+            }
+            else {
+                isPaiement = false;
+            }
+        }
+        i++;
+    }
+}
+
 
 function selectPaiementView(i, paiements, mode_paiements) {
     document.getElementById("paiementView" + currentPaiement).style.backgroundColor = "#B4B4B4";    // unselect current paiement
@@ -256,7 +342,6 @@ function closeOverlayOrder() {
 
 function clearOverlayOrder() {
     document.getElementById("boxProductsView").innerHTML = "";
-    
     let i = 1;
     let isProduct = true;
     while (isProduct) {

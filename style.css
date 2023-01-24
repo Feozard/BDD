@@ -509,3 +509,9 @@ input::-webkit-inner-spin-button {
 #addPaiement {
     order: 9999;
 }
+
+.hiddenPaiement {
+    visibility: hidden;
+    width: 0px;
+    margin-right: 0px;
+}
