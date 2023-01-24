@@ -96,8 +96,8 @@ function editOrder(info_order, adr, info_client, products, info_products, paieme
     document.getElementById("closeButtonEditOrder").addEventListener("click", closeOverlayEditOrder);    // close overlay
 
     document.getElementById("addPaiement").addEventListener("click", () => { addPaiement(paiements, mode_paiements) });
-    document.getElementById("paiement1").addEventListener("click", () => { selectPaiement(1, paiements, mode_paiements) });
-    selectPaiement(1, paiements, mode_paiements);
+    document.getElementById("paiement1").addEventListener("click", () => { selectPaiement(1) });
+    selectPaiement(1);
     document.getElementById("addProduct").addEventListener("click", () => { addProduct(info_products) });
 
     document.getElementById("id_orderEdit").value = info_order.id_commande;
@@ -165,6 +165,27 @@ function editOrder(info_order, adr, info_client, products, info_products, paieme
             document.getElementById("n_product" + (i+1)).value = products[i].quantite;
         }
     }
+
+    // display paiements
+    if (paiements.length > 0) {
+        for (let i = 0; i < paiements.length; i++) {
+            if (i > 0) {
+                addPaiement(paiements, mode_paiements);
+            }
+            let indexPaiement;
+            for (let j = 0; j < mode_paiements.length; j++) {
+                if (mode_paiements[j].id_mode_paiement == paiements[i].mode_paiement) {
+                    indexPaiement = j;
+                    break;
+                }
+            }
+            document.getElementById("typePaiement" + (i+1)).selectedIndex = parseInt(indexPaiement);
+            document.getElementById("montant" + (i+1)).value = paiements[i].montant_paiement;
+            document.getElementById("datePaiement" +(i+1)).value = paiements[i].date_paiement;
+        }
+    }
+    selectPaiement(1, paiements, mode_paiements);
+
     document.getElementById("totalOrder").value = info_order.prix_commande + " €";
 }
 
@@ -247,8 +268,9 @@ function addPaiement(paiements, mode_paiements) {
     newP.className = "onglet";
     newP.innerHTML = "P" + nbPaiement;
     newP.type = "button";
+    let n = nbPaiement;
     newP.addEventListener("click", () => {
-        selectPaiement(nbPaiement, paiements, mode_paiements);
+        selectPaiement(n, paiements, mode_paiements);
     });
 
     var newAddPaiement = document.createElement("button");
@@ -289,24 +311,28 @@ function addPaiement(paiements, mode_paiements) {
     newDatePaiement.type = "date";
     newDatePaiement.name = "datePaiement" + nbPaiement;
     document.getElementById("dateDiv").appendChild(newDatePaiement);
-    selectPaiement(nbPaiement, paiements, mode_paiements);
+    selectPaiement(nbPaiement);
 }
 
-function selectPaiement(n, paiements, mode_paiements) {
+function selectPaiement(n) {
     console.log("select paiement " + n);
     let i = 1;
     let isPaiement = true;
     while (isPaiement) {
         if (i == n) {
             document.getElementById("paiement" + i).style.backgroundColor = "white";   // select new paiement
-            document.getElementById("typePaiement" + i).classList.remove("hiddenPaiement");
-            document.getElementById("montant" + i).type = "";
-            document.getElementById("datePaiement" + i).type = "";
+            document.getElementById("typePaiement" + i).style.visibility = "visible";
+            document.getElementById("typePaiement" + i).style.width = "100%";
+            document.getElementById("typePaiement" + i).style.marginLeft = "10px";
+            document.getElementById("montant" + i).type = "number";
+            document.getElementById("datePaiement" + i).type = "date";
         }
         else {
             if (document.getElementById("paiement" + i) != null) {
                 document.getElementById("paiement" + i).style.backgroundColor = "#B4B4B4";   // unselect current paiement
-                document.getElementById("typePaiement" + i).classList.add("hiddenPaiement")
+                document.getElementById("typePaiement" + i).style.visibility = "hidden";
+                document.getElementById("typePaiement" + i).style.width = "0px";
+                document.getElementById("typePaiement" + i).style.marginLeft = "0px";
                 document.getElementById("montant" + i).type = "hidden";
                 document.getElementById("datePaiement" + i).type = "hidden";
             }

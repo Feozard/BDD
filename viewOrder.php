@@ -35,7 +35,7 @@
                     </div>
                     <div class="blockInfo">
                         <p class="subtitle">Montant</p>
-                        <input id="montantView" class="itemForm" type="number" readonly>
+                        <input id="montantView" class="itemForm" type="text" readonly>
                     </div>
                     <div class="blockInfo">
                         <p class="subtitle">Date</p>
@@ -76,10 +76,6 @@
                     <div class="blockInfo">
                         <p class="subtitle">Montant total</p>
                         <input id="totalOrderView" class="itemForm tot" type="text" readonly>
-                    </div>
-                    <div class="blockInfo">
-                        <p class="subtitle">Restant à payer</p>
-                        <input id="resteOrderView" class="itemForm tot" type="text" readonly>
                     </div>
                 </div>
             </div>
@@ -150,11 +146,11 @@
                         </div>
                         <div class="blockInfo" id="montantDiv">
                             <p class="subtitle">Montant</p>
-                            <input id="montant1" class="itemForm" type="number" name="montant1" placeholder="0" min="0">
+                            <input id="montant1" class="itemForm" type="number" step="0.01" name="montant1" placeholder="0" min="0">
                         </div>
                         <div class="blockInfo" id="dateDiv">
                             <p class="subtitle">Date</p>
-                            <input id="datePaiement1" class="itemForm" type="text" name="datePaiement1">
+                            <input id="datePaiement1" class="itemForm" type="date" name="datePaiement1">
                         </div>
                     </div>
                 </div>
@@ -197,10 +193,6 @@
                         <div class="blockInfo">
                             <p class="subtitle">Montant total</p>
                             <input id="totalOrder" class="itemForm tot" type="text" readonly>
-                        </div>
-                        <div class="blockInfo">
-                            <p class="subtitle">Restant à payer</p>
-                            <input id="resteOrder" class="itemForm tot" type="text" readonly>
                         </div>
                     </div>
                 </div>
