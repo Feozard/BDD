@@ -77,16 +77,5 @@
                 <input id="paysView" class="itemForm" readonly>
             </div>
         </div>
-        <button class="editButton" id="editButtonClient" type="button"></button>
-        <!-- <script type="text/javascript" src="Scripts/editClient.js"></script>
-        <script type="text/javascript">
-            document.getElementById("editButtonClient").addEventListener("click", () => {
-                    editClient(<?php echo json_encode($info); ?>,
-                    <?php echo json_encode($arrayNum); ?>,
-                    <?php echo json_encode($arrayAdr); ?>,
-                    <?php echo json_encode($points); ?>,
-                    <?php echo $nb_point; ?>)
-                });
-        </script> -->
     </div>
 </div>
