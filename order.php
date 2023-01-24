@@ -25,7 +25,12 @@
         <p id="exportTitle" class="titleSection clickableTitle">
             <img src="Icons/export.svg" alt="export icon" class="icon">
             Exporter les commandes
-        </p>   
+        </p>
+        <script type="text/javascript">
+            document.getElementById("exportTItle").addEventListener("click", function() {
+                //met ta fonction ici, pour mettre du php tu encadre ton code par <?php et ?>
+            });
+        </script>
     </div>
 
     <!-- Get order info -->
